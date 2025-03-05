@@ -24,29 +24,35 @@ function WebcamPlane() {
 
   // Capturar imagen con tecla 'M'
   useEffect(() => {
-    const handleKeyPress = async (e: KeyboardEvent) => {
-      if (e.key === 'm' || e.key === 'M') {
-        const canvas = document.createElement('canvas');
-        canvas.width = videoRef.current.videoWidth;
-        canvas.height = videoRef.current.videoHeight;
-        const ctx = canvas.getContext('2d');
-        ctx?.drawImage(videoRef.current, 0, 0);
-        
-        const imageData = canvas.toDataURL('image/jpeg');
+    // Reemplaza el bloque donde se captura la imagen:
+const handleKeyPress = async (e: KeyboardEvent) => {
+  if (e.key === 'm' || e.key === 'M') {
+    const canvas = document.createElement('canvas');
+    canvas.width = videoRef.current.videoWidth;
+    canvas.height = videoRef.current.videoHeight;
+    const ctx = canvas.getContext('2d');
+    ctx?.drawImage(videoRef.current, 0, 0);
 
-        // Enviar a n8n
-        try {
-          await axios.post(webhookUrl, { image: imageData }, {
-            headers: {
-              "Content-Type": "application/json",
-            }
-          });
-          alert('Imagen enviada a n8n!');
-        } catch (error) {
-          console.error('Error:', error);
-        }
+    // Convertir a Blob en lugar de base64
+    canvas.toBlob(async (blob) => {
+      if (!blob) return;
+
+      const formData = new FormData();
+      formData.append('image', blob, 'webcam-image.jpg'); // Nombre del archivo
+
+      try {
+        await axios.post(webhookUrl, formData, {
+          headers: {
+            "Content-Type": "multipart/form-data", // Cabecera correcta
+          },
+        });
+        alert('Imagen enviada a n8n!');
+      } catch (error) {
+        console.error('Error:', error);
       }
-    };
+    }, 'image/jpeg');
+  }
+};
 
     window.addEventListener('keydown', handleKeyPress);
     return () => window.removeEventListener('keydown', handleKeyPress);
