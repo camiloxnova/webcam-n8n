@@ -7,7 +7,7 @@ import axios from 'axios';
 function WebcamPlane() {
   const meshRef = useRef<THREE.Mesh>(null);
   const videoRef = useRef<HTMLVideoElement>(document.createElement('video'));
-  const webhookUrl = import.meta.env.VITE_N8N_WEBHOOK_URL || 'https://xnova360.app.n8n.cloud/webhook-test/3ed319e1-0a26-4df8-8205-9ce8c4c0793d';
+  const webhookUrl = import.meta.env.VITE_N8N_WEBHOOK_URL || 'https://xnova360.app.n8n.cloud/webhook/3ed319e1-0a26-4df8-8205-9ce8c4c0793d';
 
   // Inicializar webcam
   useEffect(() => {
