@@ -10,7 +10,6 @@ function WebcamPlane() {
   const webhookUrl =
     import.meta.env.VITE_N8N_WEBHOOK_URL ||
     "https://xnova360.app.n8n.cloud/webhook-test/4fd60917-dffa-4765-bc0e-18413f3dcc21";
-  //const webhookUrl = "https://www.google.com.mx/?hl=es-419";
 
   // Inicializar webcam
   useEffect(() => {
@@ -28,6 +27,7 @@ function WebcamPlane() {
 
   // Capturar imagen con tecla 'M'
   useEffect(() => {
+    // Reemplaza el bloque donde se captura la imagen:
     const handleKeyPress = async (e: KeyboardEvent) => {
       if (e.key === "m" || e.key === "M") {
         const canvas = document.createElement("canvas");
@@ -36,23 +36,24 @@ function WebcamPlane() {
         const ctx = canvas.getContext("2d");
         ctx?.drawImage(videoRef.current, 0, 0);
 
-        const imageData = canvas.toDataURL("image/jpeg");
+        // Convertir a Blob en lugar de base64
+        canvas.toBlob(async (blob) => {
+          if (!blob) return;
 
-        // Enviar a n8n
-        try {
-          await axios.post(
-            webhookUrl,
-            { image: imageData },
-            {
+          const formData = new FormData();
+          formData.append("image", blob, "webcam-image.jpg"); // Nombre del archivo
+
+          try {
+            await axios.post(webhookUrl, formData, {
               headers: {
-                "Content-Type": "application/json",
+                "Content-Type": "multipart/form-data", // Cabecera correcta
               },
-            }
-          );
-          alert("Imagen enviada a n8n!");
-        } catch (error) {
-          console.error("Error:", error);
-        }
+            });
+            alert("Imagen enviada a n8n!");
+          } catch (error) {
+            console.error("Error:", error);
+          }
+        }, "image/jpeg");
       }
     };
 
