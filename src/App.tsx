@@ -11,7 +11,7 @@ function App() {
 
     setTimeout(() => {
       setStep("result"); // Después de 3 segundos, muestra el resultado
-    }, 7000);
+    }, 36000);
   };
 
   return (

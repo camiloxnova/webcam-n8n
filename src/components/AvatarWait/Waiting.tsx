@@ -4,6 +4,8 @@ import fondo from "../../assets/img/fondo.png";
 // import avatarImage from "../../assets/img/avatar.png";
 import logo from "../../assets/img/claro.png";
 
+import waitingVideo from "../../assets/videos/video.mp4";
+
 const Waiting = () => {
   return (
     <div className="container">
@@ -13,17 +15,17 @@ const Waiting = () => {
 
         <div className="avatar-container-wait">
           <h2 className="subtitlewait">Espera ...</h2>
-          <iframe
+          <video
             className="avatar"
             width="100%"
             height="350"
-            src="https://www.youtube.com/embed/GVuiftq3KsI?si=3Ac7-nzjhy1cwipL&amp;controls=0&amp;start=6&autoplay=1"
-            title="YouTube video player"
-            frameBorder="0"
-            allow="autoplay"
-            referrerPolicy="strict-origin-when-cross-origin"
-            allowFullScreen
-          ></iframe>
+            autoPlay
+            loop
+            playsInline
+          >
+            <source src={waitingVideo} type="video/mp4" />
+            Tu navegador no soporta videos HTML5.
+          </video>
           <p className="waiting-text">Espera unos segundos.....</p>
         </div>
       </div>
