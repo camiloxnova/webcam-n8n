@@ -47,8 +47,9 @@ function WebcamPlane() {
             console.log("Proceso de imagen");
             const responseFinal = await axios.post(webhookUrl, formData, {
               headers: {
-                "Content-Type": "multipart/form-data", // Cabecera correcta
+                "Content-Type": "multipart/form-data",
               },
+              timeout: 600000, // 600,000 ms = 10 minutos
             });
             console.log("Imagen enviada a n8n!", responseFinal);
             alert("Imagen enviada a n8n!");
