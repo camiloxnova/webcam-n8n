@@ -44,11 +44,13 @@ function WebcamPlane() {
           formData.append("image", blob, "webcam-image.jpg"); // Nombre del archivo
 
           try {
-            await axios.post(webhookUrl, formData, {
+            console.log("Proceso de imagen");
+            const responseFinal = await axios.post(webhookUrl, formData, {
               headers: {
                 "Content-Type": "multipart/form-data", // Cabecera correcta
               },
             });
+            console.log("Imagen enviada a n8n!", responseFinal);
             alert("Imagen enviada a n8n!");
           } catch (error) {
             console.error("Error:", error);
