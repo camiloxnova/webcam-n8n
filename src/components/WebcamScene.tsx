@@ -1,12 +1,14 @@
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Html } from "@react-three/drei";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import axios from "axios";
+import AvatarResult from "./AvatarAi/AvatarResult";
 
 function WebcamPlane() {
   const meshRef = useRef<THREE.Mesh>(null);
   const videoRef = useRef<HTMLVideoElement>(document.createElement("video"));
+  const [generatedImageUrl, setGeneratedImageUrl] = useState<string | null>(null);
   const webhookUrl =
     import.meta.env.VITE_N8N_WEBHOOK_URL ||
     "https://xnova360.app.n8n.cloud/webhook-test/497347b7-8019-4f9b-8541-2ae380e51920";
@@ -27,7 +29,6 @@ function WebcamPlane() {
 
   // Capturar imagen con tecla 'M'
   useEffect(() => {
-    // Reemplaza el bloque donde se captura la imagen:
     const handleKeyPress = async (e: KeyboardEvent) => {
       if (e.key === "m" || e.key === "M") {
         const canvas = document.createElement("canvas");
@@ -36,22 +37,28 @@ function WebcamPlane() {
         const ctx = canvas.getContext("2d");
         ctx?.drawImage(videoRef.current, 0, 0);
 
-        // Convertir a Blob en lugar de base64
         canvas.toBlob(async (blob) => {
           if (!blob) return;
 
           const formData = new FormData();
-          formData.append("image", blob, "webcam-image.jpg"); // Nombre del archivo
+          formData.append("image", blob, "webcam-image.jpg");
 
           try {
             console.log("Proceso de imagen");
-            const responseFinal = await axios.post(webhookUrl, formData, {
+            const response = await axios.post(webhookUrl, formData, {
               headers: {
                 "Content-Type": "multipart/form-data",
               },
-              timeout: 600000, // 600,000 ms = 10 minutos
+              timeout: 600000,
             });
-            console.log("Imagen enviada a n8n!", responseFinal);
+            
+            // Verificar si la respuesta contiene la URL de la imagen generada
+            if (response.data && response.data.img_url) {
+              setGeneratedImageUrl(response.data.img_url);
+              console.log("Imagen generada:", response.data.img_url);
+            }
+            
+            console.log("Imagen enviada a n8n!", response);
             alert("Imagen enviada a n8n!");
           } catch (error) {
             console.error("Error:", error);
@@ -65,10 +72,19 @@ function WebcamPlane() {
   }, [webhookUrl]);
 
   return (
-    <mesh ref={meshRef} scale={[4, 3, 1]}>
-      <planeGeometry />
-      <meshBasicMaterial map={texture} toneMapped={false} />
-    </mesh>
+    <>
+      <mesh ref={meshRef} scale={[4, 3, 1]}>
+        <planeGeometry />
+        <meshBasicMaterial map={texture} toneMapped={false} />
+      </mesh>
+      {generatedImageUrl && (
+        <Html position={[0, -2, 0]} center>
+          <div style={{ width: "400px", height: "400px" }}>
+            <AvatarResult imageUrl={generatedImageUrl} />
+          </div>
+        </Html>
+      )}
+    </>
   );
 }
 
