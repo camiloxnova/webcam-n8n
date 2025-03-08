@@ -10,7 +10,7 @@ interface AvatarPhotoProps {
 }
 
 const AvatarPhoto: React.FC<AvatarPhotoProps> = ({ onProcess }) => {
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState("asdad@sdf.com");
   const [accepted, setAccepted] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {

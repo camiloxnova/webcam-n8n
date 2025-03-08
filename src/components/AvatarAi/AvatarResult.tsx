@@ -1,11 +1,15 @@
 import React from "react";
 import "./AvatarPhoto.scss";
-import avatarImage from "../../assets/img/avatar-2.png";
 import fondo from "../../assets/img/fondo.png";
 import logo from "../../assets/img/claro.png";
 import logor from "../../assets/img/claro-r.png";
 
-const AvatarResult: React.FC = () => {
+interface AvatarResultProps {
+  imageUrl: string;
+  onReset: () => void;
+}
+
+const AvatarResult: React.FC<AvatarResultProps> = ({ imageUrl, onReset }) => {
   return (
     <div className="container">
       <img src={fondo} alt="Fondo" className="fondo" />
@@ -13,7 +17,7 @@ const AvatarResult: React.FC = () => {
         <img src={logo} alt="Logo" className="clarologo" />
         <h2 className="subtitle">AVATAR AI</h2>
         <div className="avatar-container">
-          <img src={avatarImage} alt="Avatar" className="avatar" />
+          <img src={imageUrl} alt="Avatar procesado" className="avatar" />
         </div>
         <div className="result">
           <img src={logor} alt="Logo Resultado" className="clarologo" />
@@ -22,6 +26,9 @@ const AvatarResult: React.FC = () => {
             eiusmod tempor incididunt ut labore et dolore magna aliqua.
           </p>
         </div>
+        <button type="submit" className="button" onClick={onReset}>
+          Generar nueva
+        </button>
       </div>
     </div>
   );

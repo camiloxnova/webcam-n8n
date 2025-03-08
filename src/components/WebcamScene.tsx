@@ -10,6 +10,7 @@ function WebcamPlane() {
   const webhookUrl =
     import.meta.env.VITE_N8N_WEBHOOK_URL ||
     "https://xnova360.app.n8n.cloud/webhook-test/497347b7-8019-4f9b-8541-2ae380e51920";
+  //const webhookUrl = "https://chatgpt.com/";
 
   // Inicializar webcam
   useEffect(() => {

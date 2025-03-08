@@ -1,167 +1,165 @@
 .container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    background-color: black;
-    color: white;
-    padding: 0px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: black;
+  color: white;
+  padding: 0px;
 }
 
 .fondo {
-    position: absolute;
-    z-index: 0;
-    object-fit: contain;
-    height: auto;
-    width: 500px;
+  position: absolute;
+  z-index: 0;
+  object-fit: contain;
+  height: auto;
+  width: 500px;
 }
 
 .card {
-
-    padding: 20px;
-    border-radius: 12px;
-    text-align: center;
-    max-width: 450px;
-    width: 100%;
-    z-index: 1;
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  max-width: 450px;
+  width: 100%;
+  z-index: 1;
 }
 
 .clarologo {
-    width: 180px;
+  width: 180px;
 }
 
 .title {
-    font-size: 34px;
-    font-weight: bold;
+  font-size: 34px;
+  font-weight: bold;
 }
 
 .subtitle {
-    color: red;
-    font-size: 25px;
-    font-weight: 800;
-    margin-bottom: 15px;
-    letter-spacing: 8px;
-    margin-top: 2px;
+  color: red;
+  font-size: 25px;
+  font-weight: 800;
+  margin-bottom: 15px;
+  letter-spacing: 8px;
+  margin-top: 2px;
 }
 
 .avatar-container {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 15px;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 15px;
 }
 
 .avatar-container.cam {
-    width: 350px;
-    height: 420px;
-    object-fit: cover;
-    border-radius: 12px;
-    margin: 0 auto;
+  width: 350px;
+  height: 420px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin: 0 auto;
 }
 
 .avatar {
-    width: 350px;
-    height: 420px;
-    object-fit: cover;
-    border-radius: 12px;
+  width: 350px;
+  height: 536px;
+  //object-fit: cover;
+  border-radius: 12px;
 }
 
-
 form {
-    width: 65%;
-    margin: 0 auto;
-    height: 230px;
+  width: 65%;
+  margin: 0 auto;
+  height: 230px;
 }
 
 .label {
-    width: 100%;
-    display: block;
-    text-align: left;
-    font-size: 12px;
-    margin-bottom: 5px;
-    margin: 10px auto;
-    font-weight: 800;
-    letter-spacing: 3px;
+  width: 100%;
+  display: block;
+  text-align: left;
+  font-size: 12px;
+  margin-bottom: 5px;
+  margin: 10px auto;
+  font-weight: 800;
+  letter-spacing: 3px;
 }
 
 .input {
-    max-width: 100%;
-    width: 92%;
-    padding: 10px;
-    border-radius: 5px;
-    background-color: #fff;
-    color: black;
-    border: 1px solid #555;
-    font-size: 14px;
+  max-width: 100%;
+  width: 92%;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: #fff;
+  color: black;
+  border: 1px solid #555;
+  font-size: 14px;
 }
 
 .checkbox-container {
-    display: flex;
-    align-items: center;
-    font-size: 12px;
-    margin-top: 10px;
-    color: #bbb;
-    gap: 5px;
-    width: 80%;
-    margin: 10px auto;
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+  margin-top: 10px;
+  color: #bbb;
+  gap: 5px;
+  width: 80%;
+  margin: 10px auto;
 
-    span {
-        font-size: 9px;
-    }
+  span {
+    font-size: 9px;
+  }
 }
 
 .checkbox {
-    margin-right: 0;
-    border-radius: 4px;
-    width: 15px !important;
-    height: 15px !important;
-    min-width: 15px;
-    appearance: none;
-    background: #330303;
-    display: flex;
-    justify-content: center;
+  margin-right: 0;
+  border-radius: 4px;
+  width: 15px !important;
+  height: 15px !important;
+  min-width: 15px;
+  appearance: none;
+  background: #330303;
+  display: flex;
+  justify-content: center;
 }
 
 .checkbox:checked:before {
-    background-color: white;
-    border-radius: 4px;
-    content: '';
-    width: 13px;
-    height: 13px;
-    display: flex;
-    border-radius: 100%;
-    justify-content: center;
-    align-content: center;
-    align-self: center;
+  background-color: white;
+  border-radius: 4px;
+  content: "";
+  width: 13px;
+  height: 13px;
+  display: flex;
+  border-radius: 100%;
+  justify-content: center;
+  align-content: center;
+  align-self: center;
 }
 
 .button {
-    width: 165px;
-    height: 82px;
-    background: url(../../assets/img/boton.png);
-    background-repeat: no-repeat;
-    background-size: 100%;
-    color: white;
-    font-weight: bold;
-    padding: 10px;
-    margin-top: 15px;
-    border-radius: 5px;
-    cursor: pointer;
-    border: none;
-    font-size: 30px;
+  width: 165px;
+  height: 82px;
+  background: url(../../assets/img/boton.png);
+  background-repeat: no-repeat;
+  background-size: 100%;
+  color: white;
+  font-weight: bold;
+  padding: 10px;
+  margin-top: 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  border: none;
+  font-size: 30px;
 }
 
 .button:hover {
-    box-shadow: 0px 4px 10px rgba(255, 0, 0, 0.3);
+  box-shadow: 0px 4px 10px rgba(255, 0, 0, 0.3);
 }
 
 .result {
-    width: 80%;
-    margin: 0 auto;
-    text-align: left;
-    height: 230px;
+  width: 80%;
+  margin: 0 auto;
+  text-align: left;
+  height: 100px;
 
-    .result-text {
-        color: white;
-        font-size: 11px;
-    }
+  .result-text {
+    color: white;
+    font-size: 11px;
+  }
 }
