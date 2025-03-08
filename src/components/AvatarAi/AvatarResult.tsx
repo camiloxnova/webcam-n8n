@@ -1,62 +1,34 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./AvatarPhoto.scss";
+
+// Estas imágenes locales las mantienes si las necesitas
 import avatarImage from "../../assets/img/avatar-2.png";
 import fondo from "../../assets/img/fondo.png";
 import logo from "../../assets/img/claro.png";
 import logor from "../../assets/img/claro-r.png";
 
 interface AvatarResultProps {
-  // En caso de que quieras seguir aceptando la URL por props (opcional)
   imageUrl?: string;
 }
 
 const AvatarResult: React.FC<AvatarResultProps> = ({ imageUrl }) => {
-  // Estado local para guardar la URL de la imagen
-  const [currentImage, setCurrentImage] = useState<string>(avatarImage);
+  // URL de prueba fija (S3), para “forzar” a ver si se ve en Vercel
+  const testImageUrl = "https://comfy-deploy-output.s3.us-east-2.amazonaws.com/outputs/runs/4bce9855-e131-47ea-bf26-722db7dbe775/ComfyUI_00002_.png";
 
-  useEffect(() => {
-    // 1) Si "imageUrl" viene por props y quieres priorizarlo, lo usas de inmediato:
-    if (imageUrl) {
-      setCurrentImage(imageUrl);
-    } else {
-      // 2) Si NO hay "imageUrl" en props, hacemos un fetch al endpoint (por ejemplo, n8n)
-      //    que nos devuelva el objeto con la URL de la imagen.
-      fetch("https://TU_ENDPOINT_DE_N8N_O_DE_DONDE_SEA.com") // reemplaza con tu URL real
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("Error al obtener la imagen");
-          }
-          return response.json();
-        })
-        .then((data) => {
-          // Suponiendo que data tenga esta forma:
-          // [
-          //   {
-          //     "imageUrl": "https://comfy-deploy-output.s3.us-east-2.amazonaws.com/.../ComfyUI_00002_.png"
-          //   }
-          // ]
-          if (data && data.length > 0 && data[0].imageUrl) {
-            setCurrentImage(data[0].imageUrl);
-          }
-        })
-        .catch((error) => {
-          console.error("Error al obtener la imagen: ", error);
-          // Maneja el error: podrías dejar la imagen por defecto
-          setCurrentImage(avatarImage);
-        });
-    }
-  }, [imageUrl]);
+  // En este caso, para la demo, vamos a ignorar la prop `imageUrl`
+  // y usar testImageUrl como "currentImage".
+  // Podrías usar useState, pero incluso podemos asignarlo directo.
+  const [currentImage] = useState<string>(testImageUrl);
 
   return (
     <div className="container">
       <img src={fondo} alt="Fondo" className="fondo" />
-      
       <div className="card">
         <img src={logo} alt="Logo" className="clarologo" />
         <h2 className="subtitle">AVATAR AI</h2>
 
         <div className="avatar-container">
-          {/* Aquí es donde mostramos la imagen que hayamos obtenido */}
+          {/* Muestra la imagen de prueba fija de S3 */}
           <img src={currentImage} alt="Avatar" className="avatar" />
         </div>
 
