@@ -19,7 +19,7 @@ const AvatarPhoto: React.FC<AvatarPhotoProps> = ({ onProcess }) => {
   const webhookUrl =
     import.meta.env.VITE_N8N_WEBHOOK_URL ||
     "https://xnova360.app.n8n.cloud/webhook-test/497347b7-8019-4f9b-8541-2ae380e51920";
-  //const webhookUrl = "https://chatgpt.com/";
+  //const webhookUrl = "https://test231234423234432.com/";
 
   // Función para capturar la imagen desde el componente WebcamScene
   const handleCapture = async () => {
@@ -87,7 +87,7 @@ const AvatarPhoto: React.FC<AvatarPhotoProps> = ({ onProcess }) => {
             <img
               src={capturedImageUrl}
               alt="Foto capturada"
-              className="avatar"
+              className="fotoCapturada"
             />
           ) : (
             // Si no, se muestra el feed en vivo de la cámara

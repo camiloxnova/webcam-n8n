@@ -14,8 +14,11 @@ const WebcamPlane = forwardRef((props, ref) => {
   const videoRef = useRef<HTMLVideoElement>(document.createElement("video"));
 
   useEffect(() => {
+    // Solicitamos una resolución ideal mayor para mejorar la calidad de la cámara
     navigator.mediaDevices
-      .getUserMedia({ video: true })
+      .getUserMedia({
+        video: { width: { ideal: 1280 }, height: { ideal: 720 } },
+      })
       .then((stream) => {
         videoRef.current.srcObject = stream;
         videoRef.current.play();
@@ -41,8 +44,9 @@ const WebcamPlane = forwardRef((props, ref) => {
       }),
   }));
 
+  // Se aumenta la escala para que se vea más grande
   return (
-    <mesh ref={meshRef} scale={[4, 3, 1]}>
+    <mesh ref={meshRef} scale={[8, 6, 1]}>
       <planeGeometry />
       <meshBasicMaterial map={texture} toneMapped={false} />
     </mesh>
@@ -51,7 +55,10 @@ const WebcamPlane = forwardRef((props, ref) => {
 
 const WebcamScene = forwardRef((props, ref) => {
   return (
-    <Canvas camera={{ position: [0, 0, 5] }}>
+    <Canvas
+      camera={{ position: [0, 0, 5], fov: 50 }}
+      style={{ width: "100%", height: "100%" }} // Opcional: ajusta el tamaño del canvas
+    >
       <ambientLight intensity={0.5} />
       <WebcamPlane ref={ref} />
       <OrbitControls enableZoom={false} />
