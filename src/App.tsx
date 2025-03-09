@@ -6,6 +6,15 @@ import { db } from "./firebaseConfig"; // Import Firestore
 import { collection, addDoc } from "firebase/firestore"; // Import Firestore functions
 
 function App() {
+  useEffect(() => {
+    fetch("https://proyectoshm.com/marco_pruebas/imagen/clear_image_data.php")
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Clear WS:", data.message);
+      })
+      .catch((error) => console.error("Error limpiando el archivo:", error));
+  }, []);
+
   // "photo": para mostrar el componente de AvatarPhoto.
   // "waiting": para mostrar el componente de espera mientras se procesa la imagen.
   // "result": para mostrar el componente con la imagen final.
