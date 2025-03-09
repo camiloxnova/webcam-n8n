@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import "./AvatarPhoto.scss";
 import fondo from "../../assets/img/fondo.png";
-// import avatarImage from "../../assets/img/avatar.png";
 import logo from "../../assets/img/claro.png";
 import WebcamScene from "../WebcamScene";
+import axios from "axios";
 
 interface AvatarPhotoProps {
   onProcess: () => void;
@@ -12,27 +12,96 @@ interface AvatarPhotoProps {
 const AvatarPhoto: React.FC<AvatarPhotoProps> = ({ onProcess }) => {
   const [email, setEmail] = useState("asdad@sdf.com");
   const [accepted, setAccepted] = useState(false);
+  const [capturedImage, setCapturedImage] = useState<Blob | null>(null);
+  const [capturedImageUrl, setCapturedImageUrl] = useState<string>("");
+  const webcamRef = useRef<any>(null);
 
+  const webhookUrl =
+    import.meta.env.VITE_N8N_WEBHOOK_URL ||
+    "https://xnova360.app.n8n.cloud/webhook-test/497347b7-8019-4f9b-8541-2ae380e51920";
+  //const webhookUrl = "https://chatgpt.com/";
+
+  // Función para capturar la imagen desde el componente WebcamScene
+  const handleCapture = async () => {
+    if (webcamRef.current && webcamRef.current.captureImage) {
+      try {
+        const blob = await webcamRef.current.captureImage();
+        setCapturedImage(blob);
+        const url = URL.createObjectURL(blob);
+        setCapturedImageUrl(url);
+      } catch (error) {
+        console.error("Error al capturar la imagen:", error);
+      }
+    }
+  };
+
+  // Envía la imagen capturada al endpoint de n8n
+  const handleProcessImage = async () => {
+    if (!capturedImage) return;
+    const formData = new FormData();
+    formData.append("image", capturedImage, "webcam-image.jpg");
+    try {
+      console.log("Enviando imagen...");
+      onProcess(); //TEMPORAL NO DEBE IR AQUI
+      const responseFinal = await axios.post(webhookUrl, formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+        timeout: 600000,
+      });
+      console.log("Imagen enviada a n8n!", responseFinal);
+      alert("Imagen enviada a n8n!");
+      //onProcess(); // Cambia de pantalla (por ejemplo, a 'waiting')
+    } catch (error) {
+      console.error("Error al procesar la imagen:", error);
+    }
+  };
+
+  // Permite reiniciar la captura para tomar otra foto
+  const handleResetCapture = () => {
+    setCapturedImage(null);
+    setCapturedImageUrl("");
+  };
+
+  // Validación del formulario y envío de la imagen
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!accepted) {
       alert("Debes aceptar la política de datos.");
       return;
     }
-    onProcess(); // cambia de pantalla
+    if (!capturedImage) {
+      alert("Primero toma una foto.");
+      return;
+    }
+    handleProcessImage();
   };
 
   return (
     <div className="container">
-      <img src={fondo} alt="Avatar" className="fondo" />
+      <img src={fondo} alt="Fondo" className="fondo" />
       <div className="card">
         <img src={logo} alt="Logo" className="clarologo" />
         <h2 className="subtitle">AVATAR AI</h2>
-        {/* <div className="avatar-container">
-         <img src={avatarImage} alt="Avatar" className="avatar" /> 
-        </div> */}
         <div className="avatar-container cam">
-          <WebcamScene />
+          {capturedImageUrl ? (
+            // Si ya se capturó la imagen, se muestra la imagen fija
+            <img
+              src={capturedImageUrl}
+              alt="Foto capturada"
+              className="avatar"
+            />
+          ) : (
+            // Si no, se muestra el feed en vivo de la cámara
+            <WebcamScene ref={webcamRef} />
+          )}
+        </div>
+        <div className="buttons-container">
+          <button
+            type="button"
+            className="button"
+            onClick={capturedImageUrl ? handleResetCapture : handleCapture}
+          >
+            {capturedImageUrl ? "Tomar otra" : "Tomar foto"}
+          </button>
         </div>
         <form onSubmit={handleSubmit}>
           <label className="label">CORREO</label>
@@ -58,9 +127,11 @@ const AvatarPhoto: React.FC<AvatarPhotoProps> = ({ onProcess }) => {
               </span>
             </label>
           </div>
-          <button type="submit" className="button">
-            Procesar
-          </button>
+          {capturedImageUrl && (
+            <button type="submit" className="button">
+              Procesar
+            </button>
+          )}
         </form>
       </div>
     </div>
