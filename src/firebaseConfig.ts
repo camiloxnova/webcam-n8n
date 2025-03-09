@@ -2,13 +2,13 @@ import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyACdDSnq3NXJA4JAYaRj4BRBCYLHklD948",
-  authDomain: "claro-media-84b5d.firebaseapp.com",
-  projectId: "claro-media-84b5d",
-  storageBucket: "claro-media-84b5d.firebasestorage.app",
-  messagingSenderId: "862865498110",
-  appId: "1:862865498110:web:df302788869b534b28eaaf",
-  measurementId: "G-BLRTS932Q7",
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
 };
 
 const app = initializeApp(firebaseConfig);
