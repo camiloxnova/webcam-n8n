@@ -42,14 +42,14 @@ const AvatarPhoto: React.FC<AvatarPhotoProps> = ({ onProcess }) => {
     formData.append("image", capturedImage, "webcam-image.jpg");
     try {
       console.log("Enviando imagen...");
-      onProcess(); //TEMPORAL NO DEBE IR AQUI
+      //onProcess(); //TEMPORAL NO DEBE IR AQUI
       const responseFinal = await axios.post(webhookUrl, formData, {
         headers: { "Content-Type": "multipart/form-data" },
         timeout: 600000,
       });
       console.log("Imagen enviada a n8n!", responseFinal);
-      alert("Imagen enviada a n8n!");
-      //onProcess(); // Cambia de pantalla (por ejemplo, a 'waiting')
+      //alert("Imagen enviada a n8n!");
+      onProcess(); // Cambia de pantalla (por ejemplo, a 'waiting')
     } catch (error) {
       console.error("Error al procesar la imagen:", error);
     }
