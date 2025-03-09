@@ -4,16 +4,17 @@ import fondo from "../../assets/img/fondo.png";
 import logo from "../../assets/img/claro.png";
 import WebcamScene from "../WebcamScene";
 import axios from "axios";
+import Swal from "sweetalert2"; // Import sweetalert2
 
 interface AvatarPhotoProps {
-  onProcess: () => void;
+  onProcess: (email: string) => void;
 }
 interface WebcamRef {
   captureImage: () => Promise<Blob>;
 }
 
 const AvatarPhoto: React.FC<AvatarPhotoProps> = ({ onProcess }) => {
-  const [email, setEmail] = useState("asdad@sdf.com");
+  const [email, setEmail] = useState("");
   const [accepted, setAccepted] = useState(false);
   const [capturedImage, setCapturedImage] = useState<Blob | null>(null);
   const [capturedImageUrl, setCapturedImageUrl] = useState<string>("");
@@ -52,7 +53,7 @@ const AvatarPhoto: React.FC<AvatarPhotoProps> = ({ onProcess }) => {
       });
       console.log("Imagen enviada a n8n!", responseFinal);
       //alert("Imagen enviada a n8n!");
-      onProcess(); // Cambia de pantalla (por ejemplo, a 'waiting')
+      onProcess(email); // Cambia de pantalla (por ejemplo, a 'waiting')
     } catch (error) {
       console.error("Error al procesar la imagen:", error);
     }
@@ -68,13 +69,22 @@ const AvatarPhoto: React.FC<AvatarPhotoProps> = ({ onProcess }) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!accepted) {
-      alert("Debes aceptar la política de datos.");
+      Swal.fire({
+        icon: "warning",
+        title: "Advertencia",
+        text: "Debes aceptar la política de datos.",
+      });
       return;
     }
     if (!capturedImage) {
-      alert("Primero toma una foto.");
+      Swal.fire({
+        icon: "warning",
+        title: "Advertencia",
+        text: "Primero toma una foto.",
+      });
       return;
     }
+    onProcess(email);
     handleProcessImage();
   };
 

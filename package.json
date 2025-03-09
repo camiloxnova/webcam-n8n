@@ -15,8 +15,10 @@
     "@types/three": "^0.174.0",
     "axios": "^1.8.1",
     "cors": "^2.8.5",
+    "firebase": "^11.4.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "sweetalert2": "^11.17.2",
     "three": "^0.174.0"
   },
   "devDependencies": {

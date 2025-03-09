@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import AvatarPhoto from "./components/AvatarAi/AvatarPhoto";
 import AvatarResult from "./components/AvatarAi/AvatarResult";
 import Waiting from "./components/AvatarWait/Waiting";
+import { db } from "./firebaseConfig"; // Import Firestore
+import { collection, addDoc } from "firebase/firestore"; // Import Firestore functions
 
 function App() {
   // "photo": para mostrar el componente de AvatarPhoto.
@@ -11,15 +13,17 @@ function App() {
   const [imageUrl, setImageUrl] = useState("");
   // Para recordar la última URL recibida y evitar transiciones repetidas
   const [lastImageUrl, setLastImageUrl] = useState("");
+  const [email, setEmail] = useState(""); // State to store email
 
   // Esta función se invoca en AvatarPhoto cuando se envía la petición a n8n
-  const handleProcess = () => {
+  const handleProcess = (email: string) => {
+    setEmail(email); // Store the email
     setStep("waiting");
     // Aquí ya se dispara la petición a n8n para iniciar el proceso.
   };
 
   useEffect(() => {
-    let interval: number;
+    let interval: ReturnType<typeof setInterval>;
 
     // Solo en el paso "waiting" se hace polling a la API de PHP
     if (step === "waiting") {
@@ -38,6 +42,14 @@ function App() {
             setLastImageUrl(data.img_url);
             setImageUrl(data.img_url);
             setStep("result");
+
+            await addDoc(collection(db, "images"), {
+              email: email,
+              imageUrl: data.img_url,
+              date: new Date(),
+              correoEnviado: false,
+            });
+            console.log("Datos guardados en Firestore!");
           }
         } catch (error) {
           console.error("Error al obtener la imagen:", error);
@@ -48,7 +60,7 @@ function App() {
     return () => {
       if (interval) clearInterval(interval);
     };
-  }, [step, lastImageUrl]);
+  }, [step, lastImageUrl, email]);
 
   return (
     <div style={{ width: "100vw", height: "100vh" }}>
