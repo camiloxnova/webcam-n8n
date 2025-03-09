@@ -19,7 +19,7 @@ function App() {
   };
 
   useEffect(() => {
-    let interval: NodeJS.Timeout;
+    let interval: number;
 
     // Solo en el paso "waiting" se hace polling a la API de PHP
     if (step === "waiting") {
