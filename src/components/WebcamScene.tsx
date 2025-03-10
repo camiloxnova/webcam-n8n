@@ -8,6 +8,60 @@ interface WebcamRef {
   captureImage: () => Promise<Blob>;
 }
 
+// Función auxiliar para recortar la imagen
+const cropImage = (
+  video: HTMLVideoElement,
+  targetSize: number = 512
+): Promise<Blob> => {
+  return new Promise((resolve, reject) => {
+    const canvas = document.createElement("canvas");
+    const ctx = canvas.getContext("2d");
+    
+    if (!ctx) {
+      reject(new Error("No se pudo obtener el contexto 2D"));
+      return;
+    }
+
+    // Calculamos las dimensiones para el recorte cuadrado
+    const videoAspect = video.videoWidth / video.videoHeight;
+    let sourceWidth, sourceHeight, sourceX, sourceY;
+
+    if (videoAspect > 1) {
+      // Video más ancho que alto
+      sourceHeight = video.videoHeight;
+      sourceWidth = sourceHeight;
+      sourceX = (video.videoWidth - sourceHeight) / 2;
+      sourceY = 0;
+    } else {
+      // Video más alto que ancho
+      sourceWidth = video.videoWidth;
+      sourceHeight = sourceWidth;
+      sourceX = 0;
+      sourceY = (video.videoHeight - sourceWidth) / 2;
+    }
+
+    // Configuramos el canvas para el resultado final
+    canvas.width = targetSize;
+    canvas.height = targetSize;
+
+    // Dibujamos la porción recortada en el canvas
+    ctx.drawImage(
+      video,
+      sourceX, sourceY, sourceWidth, sourceHeight,  // área de origen
+      0, 0, targetSize, targetSize                  // área de destino
+    );
+
+    canvas.toBlob(
+      (blob) => {
+        if (blob) resolve(blob);
+        else reject(new Error("No se pudo generar el blob de la imagen"));
+      },
+      "image/jpeg",
+      0.95
+    );
+  });
+};
+
 // Tipamos el ref correctamente en forwardRef
 const WebcamPlane = forwardRef<WebcamRef>((_, ref) => {
   const meshRef = useRef<THREE.Mesh>(null);
@@ -28,18 +82,7 @@ const WebcamPlane = forwardRef<WebcamRef>((_, ref) => {
   const texture = new THREE.VideoTexture(videoRef.current);
 
   useImperativeHandle(ref, () => ({
-    captureImage: () =>
-      new Promise<Blob>((resolve, reject) => {
-        const canvas = document.createElement("canvas");
-        canvas.width = videoRef.current.videoWidth;
-        canvas.height = videoRef.current.videoHeight;
-        const ctx = canvas.getContext("2d");
-        ctx?.drawImage(videoRef.current, 0, 0);
-        canvas.toBlob((blob) => {
-          if (blob) resolve(blob);
-          else reject(new Error("No se pudo capturar la imagen"));
-        }, "image/jpeg");
-      }),
+    captureImage: () => cropImage(videoRef.current),
   }));
 
   return (

@@ -51,22 +51,24 @@
 
 .avatar-container.cam {
   width: 350px;
-  height: 420px;
-  object-fit: cover;
+  height: 350px;
+  position: relative;
+  overflow: hidden;
   border-radius: 12px;
   margin: 0 auto;
 }
 
 .avatar {
-  width: 350px;
-  height: 536px;
-  //object-fit: cover;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   border-radius: 12px;
 }
 
 .fotoCapturada {
-  width: 110%;
-  height: 76%;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   border-radius: 12px;
 }
 
