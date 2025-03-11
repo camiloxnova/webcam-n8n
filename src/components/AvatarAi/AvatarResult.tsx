@@ -1,14 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import "./AvatarPhoto.scss";
 import fondo from "../../assets/img/fondo.png";
 import logo from "../../assets/img/claro.png";
 import logor from "../../assets/img/claro-r.png";
 
-import { storage, db } from "../../firebaseConfig"; // Import Firebase Storage y Firestore
-import { ref, uploadString, getDownloadURL } from "firebase/storage"; // Import funciones de Storage
-import { collection, addDoc } from "firebase/firestore"; // Firestore
+import { storage, db } from "../../firebaseConfig";
+import { ref, uploadString, getDownloadURL } from "firebase/storage";
+import { collection, addDoc } from "firebase/firestore";
 
 import MergeImage from "./MergeImage";
+
 interface AvatarResultProps {
   email: string;
   imageUrl: string;
@@ -21,10 +22,15 @@ const AvatarResult: React.FC<AvatarResultProps> = ({
   onReset,
 }) => {
   const [mergedImage, setMergedImage] = useState<string | null>(null);
+  // useRef para evitar que la función se ejecute más de una vez
+  const hasMergedRef = useRef(false);
 
   const handleMerged = async (dataUrl: string) => {
+    // Si ya se procesó la imagen, salir inmediatamente
+    if (hasMergedRef.current) return;
+    hasMergedRef.current = true;
+
     try {
-      if (mergedImage) return;
       // 1️⃣ Crear referencia en Firebase Storage
       const storageRef = ref(storage, `avatars/${email}-${Date.now()}.png`);
 
@@ -37,7 +43,7 @@ const AvatarResult: React.FC<AvatarResultProps> = ({
       // 4️⃣ Guardar URL en Firestore
       await addDoc(collection(db, "images"), {
         email: email,
-        imageUrl: downloadURL, // Guardamos la URL en vez del base64
+        imageUrl: downloadURL,
         date: new Date(),
         correoEnviado: false,
       });
