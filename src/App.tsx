@@ -25,10 +25,15 @@ function App() {
   const [email, setEmail] = useState(""); // State to store email
 
   // Esta función se invoca en AvatarPhoto cuando se envía la petición a n8n
-  const handleProcess = (email: string) => {
-    setEmail(email); // Store the email
+  const handleProcess = () => {
+    setEmail(""); // Store the email
     setStep("waiting");
     // Aquí ya se dispara la petición a n8n para iniciar el proceso.
+  };
+
+  // Función para actualizar el email conforme se escribe en Waiting.
+  const handleEmailChange = (newEmail: string) => {
+    setEmail(newEmail);
   };
 
   useEffect(() => {
@@ -38,6 +43,8 @@ function App() {
     if (step === "waiting") {
       interval = setInterval(async () => {
         try {
+          //console.log("email", email);
+
           const response = await fetch(
             "https://proyectoshm.com/marco_pruebas/imagen/callback.php"
           );
@@ -74,7 +81,9 @@ function App() {
   return (
     <div style={{ width: "100vw", height: "100vh" }}>
       {step === "photo" && <AvatarPhoto onProcess={handleProcess} />}
-      {step === "waiting" && <Waiting />}
+      {step === "waiting" && (
+        <Waiting email={email} onEmailChange={handleEmailChange} />
+      )}
       {step === "result" && (
         <AvatarResult imageUrl={imageUrl} onReset={() => setStep("photo")} />
       )}

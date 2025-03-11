@@ -15,8 +15,7 @@ interface WebcamRef {
 }
 
 const AvatarPhoto: React.FC<AvatarPhotoProps> = ({ onProcess }) => {
-  const [email, setEmail] = useState("");
-  const [accepted, setAccepted] = useState(false);
+  const [email] = useState("");
   const [capturedImage, setCapturedImage] = useState<Blob | null>(null);
   const [capturedImageUrl, setCapturedImageUrl] = useState<string>("");
   const webcamRef = useRef<WebcamRef | null>(null);
@@ -69,14 +68,7 @@ const AvatarPhoto: React.FC<AvatarPhotoProps> = ({ onProcess }) => {
   // Validación del formulario y envío de la imagen
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!accepted) {
-      Swal.fire({
-        icon: "warning",
-        title: "Advertencia",
-        text: "Debes aceptar la política de datos.",
-      });
-      return;
-    }
+
     if (!capturedImage) {
       Swal.fire({
         icon: "warning",
@@ -128,29 +120,6 @@ const AvatarPhoto: React.FC<AvatarPhotoProps> = ({ onProcess }) => {
           </button>
         </div>
         <form onSubmit={handleSubmit}>
-          <label className="label">CORREO</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="input"
-            required
-          />
-          <div className="checkbox-container">
-            <input
-              type="checkbox"
-              checked={accepted}
-              onChange={() => setAccepted(!accepted)}
-              className="checkbox"
-              id="tratamiento"
-            />
-            <label htmlFor="tratamiento">
-              <span>
-                Autorizo el trato de mis datos personales conforme a la política
-                de tratamiento de datos.
-              </span>
-            </label>
-          </div>
           {capturedImageUrl && (
             <button type="submit" className="button">
               Procesar
