@@ -4,19 +4,52 @@ import fondo from "../../assets/img/fondo.png";
 import logo from "../../assets/img/claro.png";
 import logor from "../../assets/img/claro-r.png";
 
+import { storage, db } from "../../firebaseConfig"; // Import Firebase Storage y Firestore
+import { ref, uploadString, getDownloadURL } from "firebase/storage"; // Import funciones de Storage
+import { collection, addDoc } from "firebase/firestore"; // Firestore
+
 import MergeImage from "./MergeImage";
 interface AvatarResultProps {
+  email: string;
   imageUrl: string;
   onReset: () => void;
 }
 
-const AvatarResult: React.FC<AvatarResultProps> = ({ imageUrl, onReset }) => {
+const AvatarResult: React.FC<AvatarResultProps> = ({
+  email,
+  imageUrl,
+  onReset,
+}) => {
   const [mergedImage, setMergedImage] = useState<string | null>(null);
 
-  const handleMerged = (dataUrl: string) => {
-    setMergedImage(dataUrl);
-    // Aquí ya tienes la imagen fusionada en dataUrl,
-    // la puedes enviar a tu WS con fetch o axios.
+  const handleMerged = async (dataUrl: string) => {
+    try {
+      if (mergedImage) return;
+      // 1️⃣ Crear referencia en Firebase Storage
+      const storageRef = ref(storage, `avatars/${email}-${Date.now()}.png`);
+
+      // 2️⃣ Subir imagen en base64 a Firebase Storage
+      await uploadString(storageRef, dataUrl, "data_url");
+
+      // 3️⃣ Obtener la URL de descarga
+      const downloadURL = await getDownloadURL(storageRef);
+
+      // 4️⃣ Guardar URL en Firestore
+      await addDoc(collection(db, "images"), {
+        email: email,
+        imageUrl: downloadURL, // Guardamos la URL en vez del base64
+        date: new Date(),
+        correoEnviado: false,
+      });
+
+      console.log(
+        "Imagen guardada en Storage y URL en Firestore:",
+        downloadURL
+      );
+      setMergedImage(downloadURL);
+    } catch (error) {
+      console.error("Error al subir imagen:", error);
+    }
   };
 
   return (

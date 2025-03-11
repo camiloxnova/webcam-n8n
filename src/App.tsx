@@ -2,8 +2,6 @@ import { useState, useEffect } from "react";
 import AvatarPhoto from "./components/AvatarAi/AvatarPhoto";
 import AvatarResult from "./components/AvatarAi/AvatarResult";
 import Waiting from "./components/AvatarWait/Waiting";
-import { db } from "./firebaseConfig"; // Import Firestore
-import { collection, addDoc } from "firebase/firestore"; // Import Firestore functions
 
 // Componente para mostrar la política de tratamiento de datos
 const Policy = ({ onBack }: { onBack: () => void }) => {
@@ -147,13 +145,13 @@ function App() {
             setImageUrl(data.img_url);
             setStep("result");
 
-            await addDoc(collection(db, "images"), {
-              email: email,
-              imageUrl: data.img_url,
-              date: new Date(),
-              correoEnviado: false,
-            });
-            console.log("Datos guardados en Firestore!");
+            // await addDoc(collection(db, "images"), {
+            //   email: email,
+            //   imageUrl: data.img_url,
+            //   date: new Date(),
+            //   correoEnviado: false,
+            // });
+            // console.log("Datos guardados en Firestore!");
           }
         } catch (error) {
           console.error("Error al obtener la imagen:", error);
@@ -177,7 +175,11 @@ function App() {
         />
       )}
       {step === "result" && (
-        <AvatarResult imageUrl={imageUrl} onReset={() => setStep("photo")} />
+        <AvatarResult
+          imageUrl={imageUrl}
+          email={email}
+          onReset={() => setStep("photo")}
+        />
       )}
       {step === "policy" && <Policy onBack={() => setStep("waiting")} />}
     </div>
