@@ -5,6 +5,96 @@ import Waiting from "./components/AvatarWait/Waiting";
 import { db } from "./firebaseConfig"; // Import Firestore
 import { collection, addDoc } from "firebase/firestore"; // Import Firestore functions
 
+// Componente para mostrar la política de tratamiento de datos
+const Policy = ({ onBack }: { onBack: () => void }) => {
+  const containerStyle = {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    height: "100vh",
+    backgroundColor: "#f5f5f5",
+  };
+
+  const cardStyle = {
+    background: "white",
+    padding: "40px",
+    borderRadius: "8px",
+    textAlign: "center" as const,
+    boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)",
+    maxWidth: "600px",
+    width: "90%",
+  };
+
+  const titleStyle = {
+    marginBottom: "20px",
+    fontSize: "24px",
+  };
+
+  const textStyle = {
+    marginBottom: "30px",
+    fontSize: "16px",
+    lineHeight: "1.5",
+  };
+
+  const buttonStyle = {
+    padding: "10px 20px",
+    fontSize: "16px",
+    background: "#007bff",
+    color: "white",
+    border: "none",
+    borderRadius: "4px",
+    cursor: "pointer",
+  };
+
+  return (
+    <div style={containerStyle}>
+      <div style={cardStyle}>
+        <h2 style={titleStyle}>
+          POLÍTICA DE TRATAMIENTO DE DATOS PERSONALES Y USO DE IMAGEN
+        </h2>
+        <h3>CLARO MEDIA</h3>
+        <p style={textStyle}>
+          Fecha de actualización: 10 de marzo de 2025 <br />
+          <br />
+          En CLARO MEDIA, protegemos la privacidad de los participantes en
+          nuestra experiencia de inteligencia artificial. A continuación,
+          detallamos cómo recopilamos, usamos y protegemos su información.{" "}
+          <br />
+          <br />
+          <br />
+          1.⁠ ⁠Datos recopilados Solicitamos los siguientes datos personales:{" "}
+          <br />
+          • Nombre <br />
+          • Correo electrónico <br />
+          • Fotografía inicial (para generar un avatar con inteligencia
+          artificial) <br />
+          <br />
+          2.⁠ ⁠Finalidad del tratamiento Los datos se usarán exclusivamente
+          para: <br />
+          • Crear un avatar digital. <br />
+          • Enviar la imagen final al correo del participante. <br />
+          <br />
+          3.⁠ ⁠Uso y protección de la información No usaremos ni publicaremos
+          las imágenes con fines comerciales o publicitarios. <br />
+          <br />
+          4.⁠ ⁠Consentimiento y derechos del usuario <br />
+          <br />
+          5.⁠ ⁠Contacto Para dudas o solicitudes, comuníquese con nosotros en
+          claro.media.ia@gmail.com. <br />
+          <br />
+          CLARO MEDIA
+          <br />
+          garantiza la confidencialidad y seguridad de su información,
+          asegurando su uso exclusivo para la entrega de la imagen generada.
+        </p>
+        <button style={buttonStyle} onClick={onBack}>
+          Volver
+        </button>
+      </div>
+    </div>
+  );
+};
+
 function App() {
   useEffect(() => {
     fetch("https://proyectoshm.com/marco_pruebas/imagen/clear_image_data.php")
@@ -15,20 +105,20 @@ function App() {
       .catch((error) => console.error("Error limpiando el archivo:", error));
   }, []);
 
-  // "photo": para mostrar el componente de AvatarPhoto.
-  // "waiting": para mostrar el componente de espera mientras se procesa la imagen.
-  // "result": para mostrar el componente con la imagen final.
+  // "photo": para mostrar AvatarPhoto.
+  // "waiting": para mostrar la pantalla de espera.
+  // "result": para mostrar el resultado final.
+  // "policy": para mostrar la política de tratamiento de datos.
   const [step, setStep] = useState("photo");
   const [imageUrl, setImageUrl] = useState("");
-  // Para recordar la última URL recibida y evitar transiciones repetidas
   const [lastImageUrl, setLastImageUrl] = useState("");
-  const [email, setEmail] = useState(""); // State to store email
+  const [email, setEmail] = useState("");
 
-  // Esta función se invoca en AvatarPhoto cuando se envía la petición a n8n
+  // Esta función se invoca en AvatarPhoto al enviar la petición a n8n.
+  // Además, al cambiar a Waiting se limpia el email para que el usuario lo ingrese nuevamente.
   const handleProcess = () => {
-    setEmail(""); // Store the email
+    setEmail("");
     setStep("waiting");
-    // Aquí ya se dispara la petición a n8n para iniciar el proceso.
   };
 
   // Función para actualizar el email conforme se escribe en Waiting.
@@ -39,17 +129,15 @@ function App() {
   useEffect(() => {
     let interval: ReturnType<typeof setInterval>;
 
-    // Solo en el paso "waiting" se hace polling a la API de PHP
+    // Solo en el paso "waiting" se hace polling a la API de PHP.
     if (step === "waiting") {
       interval = setInterval(async () => {
         try {
-          //console.log("email", email);
-
           const response = await fetch(
             "https://proyectoshm.com/marco_pruebas/imagen/callback.php"
           );
           const data = await response.json();
-          // Si existe una imagen y es distinta a la última recibida, es una imagen nueva
+          // Si existe una imagen nueva, se actualiza el estado y se guarda en Firestore.
           if (
             data.img_url &&
             data.img_url !== "" &&
@@ -70,7 +158,7 @@ function App() {
         } catch (error) {
           console.error("Error al obtener la imagen:", error);
         }
-      }, 5000); // Consulta cada 5 segundos (ajusta el intervalo según tus necesidades)
+      }, 5000); // Consulta cada 5 segundos
     }
 
     return () => {
@@ -82,11 +170,16 @@ function App() {
     <div style={{ width: "100vw", height: "100vh" }}>
       {step === "photo" && <AvatarPhoto onProcess={handleProcess} />}
       {step === "waiting" && (
-        <Waiting email={email} onEmailChange={handleEmailChange} />
+        <Waiting
+          email={email}
+          onEmailChange={handleEmailChange}
+          onShowPolicy={() => setStep("policy")}
+        />
       )}
       {step === "result" && (
         <AvatarResult imageUrl={imageUrl} onReset={() => setStep("photo")} />
       )}
+      {step === "policy" && <Policy onBack={() => setStep("waiting")} />}
     </div>
   );
 }

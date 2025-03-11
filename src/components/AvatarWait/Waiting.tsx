@@ -8,9 +8,14 @@ import waitingVideo from "../../assets/videos/video.mp4";
 interface WaitingProps {
   email: string;
   onEmailChange: (email: string) => void;
+  onShowPolicy: () => void;
 }
 
-const Waiting: React.FC<WaitingProps> = ({ email, onEmailChange }) => {
+const Waiting: React.FC<WaitingProps> = ({
+  email,
+  onEmailChange,
+  onShowPolicy,
+}) => {
   return (
     <div className="container">
       <img src={fondo} alt="Avatar" className="fondo" />
@@ -37,16 +42,19 @@ const Waiting: React.FC<WaitingProps> = ({ email, onEmailChange }) => {
             required
           />
           <div className="checkbox-container">
-            <input
-              type="checkbox"
-              // Puedes manejar el estado del checkbox de forma similar o localmente
-              className="checkbox"
-              id="tratamiento"
-            />
+            <input type="checkbox" className="checkbox" id="tratamiento" />
             <label htmlFor="tratamiento">
               <span>
-                Autorizo el trato de mis datos personales conforme a la política
-                de tratamiento de datos.
+                Autorizo el trato de mis datos personales conforme a la{" "}
+                <a
+                  href="#"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onShowPolicy();
+                  }}
+                >
+                  política de tratamiento de datos.
+                </a>
               </span>
             </label>
           </div>
