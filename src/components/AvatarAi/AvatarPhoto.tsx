@@ -5,6 +5,7 @@ import logo from "../../assets/img/claro.png";
 import WebcamScene from "../WebcamScene";
 import axios from "axios";
 import Swal from "sweetalert2"; // Import sweetalert2
+import { FaCamera } from "react-icons/fa";
 
 interface AvatarPhotoProps {
   onProcess: (email: string) => void;
@@ -110,10 +111,20 @@ const AvatarPhoto: React.FC<AvatarPhotoProps> = ({ onProcess }) => {
         <div className="buttons-container">
           <button
             type="button"
-            className="button"
+            className="button button-camera"
             onClick={capturedImageUrl ? handleResetCapture : handleCapture}
           >
-            {capturedImageUrl ? "Tomar otra" : "Tomar foto"}
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                width: "100%",
+              }}
+            >
+              <FaCamera size={38} style={{ marginRight: "8px" }} />
+              {capturedImageUrl ? "Tomar otra" : "Tomar foto"}
+            </div>
           </button>
         </div>
         <form onSubmit={handleSubmit}>
