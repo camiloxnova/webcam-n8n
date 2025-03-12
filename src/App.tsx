@@ -17,7 +17,7 @@ const Policy = ({ onBack }: { onBack: () => void }) => {
     background: "white",
     padding: "40px",
     borderRadius: "8px",
-    textAlign: "justify",
+    textAlign: "justify" as const,
     boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)",
     maxWidth: "600px",
     width: "90%",
@@ -32,7 +32,7 @@ const Policy = ({ onBack }: { onBack: () => void }) => {
     marginBottom: "30px",
     fontSize: "16px",
     lineHeight: "1.5",
-    textAlign: "justify",
+    textAlign: "justify" as const,
   };
 
   const buttonStyle = {
