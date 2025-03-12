@@ -7,15 +7,22 @@ import waitingVideo from "../../assets/videos/video.mp4";
 
 interface WaitingProps {
   email: string;
+  nombre: string;
   onEmailChange: (email: string) => void;
+  onNombreChange: (nombre: string) => void;
   onShowPolicy: () => void;
 }
 
 const Waiting: React.FC<WaitingProps> = ({
   email,
+  nombre,
+  onNombreChange,
   onEmailChange,
   onShowPolicy,
 }) => {
+  const styleVideo = {
+    width: "60%",
+  };
   return (
     <div className="container">
       <img src={fondo} alt="Avatar" className="fondo" />
@@ -24,7 +31,7 @@ const Waiting: React.FC<WaitingProps> = ({
 
         <div className="avatar-container-wait">
           <h2 className="subtitlewait">Espera ...</h2>
-          <video width="65%" autoPlay loop playsInline>
+          <video style={styleVideo} autoPlay loop playsInline>
             <source src={waitingVideo} type="video/mp4" />
             Tu navegador no soporta videos HTML5.
           </video>
@@ -33,6 +40,14 @@ const Waiting: React.FC<WaitingProps> = ({
 
         {/* Formulario con input de correo y checkbox */}
         <form>
+          <label className="label">NOMBRE</label>
+          <input
+            type="nombre"
+            value={nombre}
+            onChange={(e) => onNombreChange(e.target.value)}
+            className="input"
+            required
+          />
           <label className="label">CORREO</label>
           <input
             type="email"

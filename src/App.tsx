@@ -111,17 +111,23 @@ function App() {
   const [imageUrl, setImageUrl] = useState("");
   const [lastImageUrl, setLastImageUrl] = useState("");
   const [email, setEmail] = useState("");
+  const [nombre, setNombre] = useState("");
 
   // Esta función se invoca en AvatarPhoto al enviar la petición a n8n.
   // Además, al cambiar a Waiting se limpia el email para que el usuario lo ingrese nuevamente.
   const handleProcess = () => {
     setEmail("");
+    setNombre("");
     setStep("waiting");
   };
 
   // Función para actualizar el email conforme se escribe en Waiting.
   const handleEmailChange = (newEmail: string) => {
     setEmail(newEmail);
+  };
+
+  const handleNombreChange = (newNombre: string) => {
+    setNombre(newNombre);
   };
 
   useEffect(() => {
@@ -162,7 +168,7 @@ function App() {
     return () => {
       if (interval) clearInterval(interval);
     };
-  }, [step, lastImageUrl, email]);
+  }, [step, lastImageUrl, email, nombre]);
 
   return (
     <div style={{ width: "100vw", height: "100vh" }}>
@@ -170,7 +176,9 @@ function App() {
       {step === "waiting" && (
         <Waiting
           email={email}
+          nombre={nombre}
           onEmailChange={handleEmailChange}
+          onNombreChange={handleNombreChange}
           onShowPolicy={() => setStep("policy")}
         />
       )}
@@ -178,6 +186,7 @@ function App() {
         <AvatarResult
           imageUrl={imageUrl}
           email={email}
+          nombre={nombre}
           onReset={() => setStep("photo")}
         />
       )}

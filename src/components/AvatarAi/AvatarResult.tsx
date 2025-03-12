@@ -12,12 +12,14 @@ import MergeImage from "./MergeImage";
 
 interface AvatarResultProps {
   email: string;
+  nombre: string;
   imageUrl: string;
   onReset: () => void;
 }
 
 const AvatarResult: React.FC<AvatarResultProps> = ({
   email,
+  nombre,
   imageUrl,
   onReset,
 }) => {
@@ -34,6 +36,7 @@ const AvatarResult: React.FC<AvatarResultProps> = ({
       const downloadURL = await getDownloadURL(storageRef);
       await addDoc(collection(db, "images"), {
         email: email,
+        nombre: nombre,
         imageUrl: downloadURL,
         date: new Date(),
         correoEnviado: false,
