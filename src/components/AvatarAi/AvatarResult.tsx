@@ -52,7 +52,7 @@ const AvatarResult: React.FC<AvatarResultProps> = ({
   };
 
   return (
-    <div className="container">
+    <div className="containerResult">
       <img src={fondo} alt="Fondo" className="fondo" />
       <div className="card">
         <img src={logo} alt="Logo" className="clarologo" />

@@ -17,7 +17,7 @@ const Policy = ({ onBack }: { onBack: () => void }) => {
     background: "white",
     padding: "40px",
     borderRadius: "8px",
-    textAlign: "center" as const,
+    textAlign: "justify",
     boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)",
     maxWidth: "600px",
     width: "90%",
@@ -32,6 +32,7 @@ const Policy = ({ onBack }: { onBack: () => void }) => {
     marginBottom: "30px",
     fontSize: "16px",
     lineHeight: "1.5",
+    textAlign: "justify",
   };
 
   const buttonStyle = {
@@ -94,14 +95,14 @@ const Policy = ({ onBack }: { onBack: () => void }) => {
 };
 
 function App() {
-  useEffect(() => {
-    fetch("https://proyectoshm.com/marco_pruebas/imagen/clear_image_data.php")
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Clear WS:", data.message);
-      })
-      .catch((error) => console.error("Error limpiando el archivo:", error));
-  }, []);
+  // useEffect(() => {
+  //   fetch("https://proyectoshm.com/marco_pruebas/imagen/clear_image_data.php")
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       console.log("Clear WS:", data.message);
+  //     })
+  //     .catch((error) => console.error("Error limpiando el archivo:", error));
+  // }, []);
 
   // "photo": para mostrar AvatarPhoto.
   // "waiting": para mostrar la pantalla de espera.
