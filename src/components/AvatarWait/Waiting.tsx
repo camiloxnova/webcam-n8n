@@ -30,12 +30,15 @@ const Waiting: React.FC<WaitingProps> = ({
         <img src={logo} alt="Logo" className="clarologo" />
 
         <div className="avatar-container-wait">
-          <h2 className="subtitlewait">Espera ...</h2>
+          <h2 className="subtitlewait">Espera unos segundos ...</h2>
           <video style={styleVideo} autoPlay loop playsInline>
             <source src={waitingVideo} type="video/mp4" />
             Tu navegador no soporta videos HTML5.
           </video>
-          <p className="waiting-text">Espera unos segundos.....</p>
+          <p className="waiting-text">
+            ¡Comparte tu avatar IA en redes sociales! descarga la imagen desde
+            tu correo
+          </p>
         </div>
 
         {/* Formulario con input de correo y checkbox */}
