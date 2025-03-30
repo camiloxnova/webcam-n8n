@@ -95,14 +95,14 @@ const Policy = ({ onBack }: { onBack: () => void }) => {
 };
 
 function App() {
-  useEffect(() => {
-    fetch("https://proyectoshm.com/marco_pruebas/imagen/clear_image_data.php")
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Clear WS:", data.message);
-      })
-      .catch((error) => console.error("Error limpiando el archivo:", error));
-  }, []);
+  // useEffect(() => {
+  //   fetch("https://proyectoshm.com/marco_pruebas/imagen/clear_image_data.php")
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       console.log("Clear WS:", data.message);
+  //     })
+  //     .catch((error) => console.error("Error limpiando el archivo:", error));
+  // }, []);
 
   // "photo": para mostrar AvatarPhoto.
   // "waiting": para mostrar la pantalla de espera.
@@ -113,12 +113,14 @@ function App() {
   const [lastImageUrl, setLastImageUrl] = useState("");
   const [email, setEmail] = useState("");
   const [nombre, setNombre] = useState("");
+  const [imagenGenerada, setImagenGenerada] = useState(false); // Nueva bandera
 
   // Esta función se invoca en AvatarPhoto al enviar la petición a n8n.
   // Además, al cambiar a Waiting se limpia el email para que el usuario lo ingrese nuevamente.
   const handleProcess = () => {
     setEmail("");
     setNombre("");
+    setImagenGenerada(false); // Reiniciamos la bandera al iniciar el proceso
     setStep("waiting");
   };
 
@@ -129,6 +131,11 @@ function App() {
 
   const handleNombreChange = (newNombre: string) => {
     setNombre(newNombre);
+  };
+
+  // Función para pasar a AvatarResult cuando el usuario haga clic en el botón.
+  const handleContinue = () => {
+    setStep("result");
   };
 
   useEffect(() => {
@@ -150,15 +157,7 @@ function App() {
           ) {
             setLastImageUrl(data.img_url);
             setImageUrl(data.img_url);
-            setStep("result");
-
-            // await addDoc(collection(db, "images"), {
-            //   email: email,
-            //   imageUrl: data.img_url,
-            //   date: new Date(),
-            //   correoEnviado: false,
-            // });
-            // console.log("Datos guardados en Firestore!");
+            setImagenGenerada(true); // Establecemos la bandera en true
           }
         } catch (error) {
           console.error("Error al obtener la imagen:", error);
@@ -178,9 +177,11 @@ function App() {
         <Waiting
           email={email}
           nombre={nombre}
+          imagenGenerada={imagenGenerada} // Prop bandera
           onEmailChange={handleEmailChange}
           onNombreChange={handleNombreChange}
           onShowPolicy={() => setStep("policy")}
+          onContinue={handleContinue} // Función para pasar a AvatarResult
         />
       )}
       {step === "result" && (
