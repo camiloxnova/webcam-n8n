@@ -8,11 +8,11 @@ import waitingVideo from "../../assets/videos/video.mp4";
 interface WaitingProps {
   email: string;
   nombre: string;
-  imagenGenerada: boolean; // Nuevo prop
+  imagenGenerada: boolean; // Nuevo prop para indicar si la imagen ya se generó
   onEmailChange: (email: string) => void;
   onNombreChange: (nombre: string) => void;
   onShowPolicy: () => void;
-  onContinue: () => void; // Nuevo prop
+  onContinue: () => void; // Función para continuar a AvatarResult
 }
 
 const Waiting: React.FC<WaitingProps> = ({
@@ -34,17 +34,28 @@ const Waiting: React.FC<WaitingProps> = ({
       <div className="card">
         <img src={logo} alt="Logo" className="clarologo" />
 
-        <div className="avatar-container-wait">
-          <h2 className="subtitlewait">Espera unos segundos ...</h2>
-          <video style={styleVideo} autoPlay loop playsInline>
-            <source src={waitingVideo} type="video/mp4" />
-            Tu navegador no soporta videos HTML5.
-          </video>
-          <p className="waiting-text">
-            ¡Comparte tu avatar IA en redes sociales! Descarga la imagen desde
-            tu correo.
-          </p>
-        </div>
+        {/* Se muestra un contenido distinto según si la imagen ya se generó o no */}
+        {imagenGenerada ? (
+          <div className="avatar-container-ready">
+            <h2 className="subtitlewait">¡Tu imagen IA está lista!</h2>
+            <p className="ready-text">
+              Disfruta de un avatar único que fusiona arte y tecnología. <br />
+              ¡Haz clic para verlo!
+            </p>
+          </div>
+        ) : (
+          <div className="avatar-container-wait">
+            <h2 className="subtitlewait">Espera unos segundos ...</h2>
+            <video style={styleVideo} autoPlay loop playsInline>
+              <source src={waitingVideo} type="video/mp4" />
+              Tu navegador no soporta videos HTML5.
+            </video>
+            <p className="waiting-text">
+              ¡Comparte tu avatar IA en redes sociales! Descarga la imagen desde
+              tu correo.
+            </p>
+          </div>
+        )}
 
         {/* Formulario con inputs de nombre y correo */}
         <form>
@@ -83,7 +94,7 @@ const Waiting: React.FC<WaitingProps> = ({
           </div>
         </form>
 
-        {/* Si la imagen ya se generó, mostramos el botón para continuar */}
+        {/* Botón para continuar a AvatarResult cuando la imagen esté lista */}
         {imagenGenerada && (
           <button className="button" onClick={onContinue}>
             Ver avatar
