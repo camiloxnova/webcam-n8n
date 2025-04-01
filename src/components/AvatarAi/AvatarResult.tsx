@@ -34,7 +34,7 @@ const AvatarResult: React.FC<AvatarResultProps> = ({
       const storageRef = ref(storage, `avatars/${email}-${Date.now()}.png`);
       await uploadString(storageRef, dataUrl, "data_url");
       const downloadURL = await getDownloadURL(storageRef);
-      await addDoc(collection(db, "images"), {
+      await addDoc(collection(db, "imagesTestClaroEmpresas"), {
         email: email,
         nombre: nombre,
         imageUrl: downloadURL,
