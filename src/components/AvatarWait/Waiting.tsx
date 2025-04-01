@@ -2,7 +2,7 @@ import React from "react";
 import "./Waiting.scss";
 
 import fondo from "../../assets/img/fondo.png";
-import logo from "../../assets/img/claro.png";
+import logo from "../../assets/img/empresas.png";
 import waitingVideo from "../../assets/videos/video.mp4";
 
 interface WaitingProps {

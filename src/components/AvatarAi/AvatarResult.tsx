@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import "./AvatarPhoto.scss";
 import fondo from "../../assets/img/fondo.png";
-import logo from "../../assets/img/claro.png";
+import logo from "../../assets/img/empresas.png";
 // import logor from "../../assets/img/claro-r.png";
 
 import { storage, db } from "../../firebaseConfig";

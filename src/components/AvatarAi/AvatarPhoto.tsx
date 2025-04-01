@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import "./AvatarPhoto.scss";
 import fondo from "../../assets/img/fondo.png";
-import logo from "../../assets/img/claro.png";
+import logo from "../../assets/img/empresas.png";
 import WebcamScene from "../WebcamScene";
 import axios from "axios";
 import Swal from "sweetalert2"; // Import sweetalert2
