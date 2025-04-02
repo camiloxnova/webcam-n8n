@@ -2,8 +2,8 @@ import React, { useRef, useEffect } from "react";
 
 // Importa o define las rutas de tus imágenes de marco
 //import claroMedia from "../../assets/img/ClaroMedia.png";
-import TextDerechaSUP from "../../assets/img/TextDerechaSUP.png";
-import TextIzquierdaSUP from "../../assets/img/TextIzquierdaSUP.png";
+import TextDerechaSUP from "../../assets/img/TextDERsup.png";
+import TextIzquierdaSUP from "../../assets/img/TextIZQsup.png";
 import logosPequenios from "../../assets/img/LogosPequenios.png";
 
 console.log("🚀 ~ claroMedia:", TextDerechaSUP);
@@ -48,7 +48,13 @@ const MergeImage: React.FC<MergeImageProps> = ({ imageUrl, onMerged }) => {
         ctx.drawImage(avatar, 0, 0, canvas.width, canvas.height);
 
         // Dibuja ClaroMedia.png en la esquina superior izquierda
-        ctx.drawImage(TextIzquierdaSUP, 20, 20, 300, 200);
+        ctx.drawImage(
+          TextIzquierdaSUP,
+          20,
+          20,
+          TextIzquierdaSUP.width,
+          TextIzquierdaSUP.height
+        );
 
         // Dibuja FraseClaro.png en la esquina superior derecha
         ctx.drawImage(
