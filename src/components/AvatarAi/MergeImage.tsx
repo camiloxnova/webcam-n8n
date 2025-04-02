@@ -2,12 +2,12 @@ import React, { useRef, useEffect } from "react";
 
 // Importa o define las rutas de tus imágenes de marco
 //import claroMedia from "../../assets/img/ClaroMedia.png";
-import claroMedia from "../../assets/img/empresas.png";
-import fraseClaro from "../../assets/img/FraseClaro.png";
+import TextDerechaSUP from "../../assets/img/TextDerechaSUP.png";
+import TextIzquierdaSUP from "../../assets/img/TextIzquierdaSUP.png";
 import logosPequenios from "../../assets/img/LogosPequenios.png";
 
-console.log("🚀 ~ claroMedia:", claroMedia);
-console.log("🚀 ~ fraseClaro:", fraseClaro);
+console.log("🚀 ~ claroMedia:", TextDerechaSUP);
+console.log("🚀 ~ fraseClaro:", TextIzquierdaSUP);
 interface MergeImageProps {
   imageUrl: string; // URL de la imagen principal (avatar)
   onMerged: (mergedDataUrl: string) => void; // Callback para retornar la imagen fusionada
@@ -35,11 +35,11 @@ const MergeImage: React.FC<MergeImageProps> = ({ imageUrl, onMerged }) => {
     // Cargamos la imagen avatar y las imágenes de marco
     Promise.all([
       loadImage(imageUrl),
-      loadImage(claroMedia),
-      loadImage(fraseClaro),
+      loadImage(TextDerechaSUP),
+      loadImage(TextIzquierdaSUP),
       loadImage(logosPequenios),
     ])
-      .then(([avatar, claro]) => {
+      .then(([avatar, TextDerechaSUP, TextIzquierdaSUP]) => {
         // Definir dimensiones del canvas en base al avatar (puedes ajustar según necesidad)
         canvas.width = avatar.width;
         canvas.height = avatar.height;
@@ -48,16 +48,16 @@ const MergeImage: React.FC<MergeImageProps> = ({ imageUrl, onMerged }) => {
         ctx.drawImage(avatar, 0, 0, canvas.width, canvas.height);
 
         // Dibuja ClaroMedia.png en la esquina superior izquierda
-        ctx.drawImage(claro, 20, 20, 250, 150);
+        ctx.drawImage(TextIzquierdaSUP, 20, 20, 300, 200);
 
         // Dibuja FraseClaro.png en la esquina superior derecha
-        /*ctx.drawImage(
-          frase,
-          canvas.width - frase.width - 20,
+        ctx.drawImage(
+          TextDerechaSUP,
+          canvas.width - TextDerechaSUP.width - 20,
           20,
-          frase.width,
-          frase.height
-        );*/
+          TextDerechaSUP.width,
+          TextDerechaSUP.height
+        );
 
         // Dibuja LogosPequenios.png en la esquina inferior derecha
         /*ctx.drawImage(

@@ -3,7 +3,8 @@ import "./Waiting.scss";
 
 import fondo from "../../assets/img/fondo.png";
 import logo from "../../assets/img/empresas.png";
-import waitingVideo from "../../assets/videos/video.mp4";
+//import waitingVideo from "../../assets/videos/video.mp4";
+import gitEspera from "../../assets/img/esperacargando.gif";
 
 interface WaitingProps {
   email: string;
@@ -24,9 +25,9 @@ const Waiting: React.FC<WaitingProps> = ({
   onShowPolicy,
   onContinue,
 }) => {
-  const styleVideo = {
-    width: "60%",
-  };
+  // const styleVideo = {
+  //   width: "60%",
+  // };
 
   return (
     <div className="container">
@@ -46,10 +47,12 @@ const Waiting: React.FC<WaitingProps> = ({
         ) : (
           <div className="avatar-container-wait">
             <h2 className="subtitlewait">Espera unos segundos ...</h2>
-            <video style={styleVideo} autoPlay loop playsInline>
-              <source src={waitingVideo} type="video/mp4" />
-              Tu navegador no soporta videos HTML5.
-            </video>
+
+            <img
+              src={gitEspera}
+              alt="LOGO CARGANDO"
+              style={{ width: "231px" }}
+            />
             <p className="waiting-text">
               ¡Comparte tu avatar IA en redes sociales! Descarga la imagen desde
               tu correo.
