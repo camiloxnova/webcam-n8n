@@ -82,8 +82,8 @@ const AvatarResult: React.FC<AvatarResultProps> = ({
           <img src={logor} alt="Logo Resultado" className="clarologo" />
           <p className="result-text">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua.
-          </p>
+            eiusmod tem por incididunt ut labore et dolore magna aliqua.
+          </p> 
         </div> */}
         {mergedImage && (
           <button type="submit" className="button" onClick={onReset}>
