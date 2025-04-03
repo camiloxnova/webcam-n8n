@@ -87,7 +87,7 @@ const AvatarResult: React.FC<AvatarResultProps> = ({
         </div> */}
         {mergedImage && (
           <button type="submit" className="button" onClick={onReset}>
-            Generar nueva
+            Empezar de nuevo
           </button>
         )}
       </div>
