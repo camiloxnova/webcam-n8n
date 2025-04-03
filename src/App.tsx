@@ -5,17 +5,31 @@ import Waiting from "./components/AvatarWait/Waiting";
 
 // Componente para mostrar la política de tratamiento de datos
 const Policy = ({ onBack }: { onBack: () => void }) => {
-  const containerStyle = {
+  // Estado para conocer el ancho actual de la ventana
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  // Consideramos "pantalla pequeña" si el ancho es menor a 400px (puedes ajustar este valor)
+  const isSmallScreen = windowWidth < 400;
+
+  const containerStyle: React.CSSProperties = {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    height: "100vh",
+    minHeight: "100vh", // Usamos minHeight para permitir crecer si hay mucho contenido
     backgroundColor: "#f5f5f5",
+    padding: "20px", // Agrega padding para evitar que el contenido toque los bordes
+    boxSizing: "border-box",
   };
 
   const cardStyle = {
     background: "white",
-    padding: "40px",
+    padding: isSmallScreen ? "20px" : "40px", // Reduce el padding en pantallas pequeñas
     borderRadius: "8px",
     textAlign: "justify" as const,
     boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)",
@@ -25,19 +39,19 @@ const Policy = ({ onBack }: { onBack: () => void }) => {
 
   const titleStyle = {
     marginBottom: "20px",
-    fontSize: "24px",
+    fontSize: isSmallScreen ? "20px" : "24px", // Ajusta el tamaño de fuente según el ancho
   };
 
   const textStyle = {
     marginBottom: "30px",
-    fontSize: "16px",
+    fontSize: isSmallScreen ? "14px" : "16px", // Ajusta el tamaño del texto
     lineHeight: "1.5",
     textAlign: "justify" as const,
   };
 
   const buttonStyle = {
-    padding: "10px 20px",
-    fontSize: "16px",
+    padding: isSmallScreen ? "8px 16px" : "10px 20px",
+    fontSize: isSmallScreen ? "14px" : "16px",
     background: "#007bff",
     color: "white",
     border: "none",
@@ -60,31 +74,29 @@ const Policy = ({ onBack }: { onBack: () => void }) => {
           detallamos cómo recopilamos, usamos y protegemos su información.{" "}
           <br />
           <br />
-          <br />
-          1.⁠ ⁠Datos recopilados Solicitamos los siguientes datos personales:{" "}
+          1.⁠ ⁠Datos recopilados: Solicitamos los siguientes datos personales:{" "}
           <br />
           • Nombre <br />
           • Correo electrónico <br />
           • Fotografía inicial (para generar un avatar con inteligencia
           artificial) <br />
           <br />
-          2.⁠ ⁠Finalidad del tratamiento Los datos se usarán exclusivamente
+          2.⁠ ⁠Finalidad del tratamiento: Los datos se usarán exclusivamente
           para: <br />
           • Crear un avatar digital. <br />
           • Enviar la imagen final al correo del participante. <br />
           <br />
-          3.⁠ ⁠Uso y protección de la información No usaremos ni publicaremos
+          3.⁠ ⁠Uso y protección de la información: No usaremos ni publicaremos
           las imágenes con fines comerciales o publicitarios. <br />
           <br />
           4.⁠ ⁠Consentimiento y derechos del usuario <br />
           <br />
-          5.⁠ ⁠Contacto Para dudas o solicitudes, comuníquese con nosotros en
+          5.⁠ ⁠Contacto: Para dudas o solicitudes, comuníquese con nosotros en
           claro.media.ia@gmail.com. <br />
           <br />
-          CLARO MEDIA
-          <br />
-          garantiza la confidencialidad y seguridad de su información,
-          asegurando su uso exclusivo para la entrega de la imagen generada.
+          CLARO MEDIA garantiza la confidencialidad y seguridad de su
+          información, asegurando su uso exclusivo para la entrega de la imagen
+          generada.
         </p>
         <button style={buttonStyle} onClick={onBack}>
           Volver
