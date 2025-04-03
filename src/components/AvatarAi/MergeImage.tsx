@@ -47,22 +47,22 @@ const MergeImage: React.FC<MergeImageProps> = ({ imageUrl, onMerged }) => {
         // Dibuja la imagen principal (avatar)
         ctx.drawImage(avatar, 0, 0, canvas.width, canvas.height);
 
-        // Dibuja ClaroMedia.png en la esquina superior izquierda
+        const scaleFactor = 0.6; // Factor de escala (0.5 = 50% más pequeño)
+
         ctx.drawImage(
           TextIzquierdaSUP,
           20,
           20,
-          TextIzquierdaSUP.width,
-          TextIzquierdaSUP.height
+          TextIzquierdaSUP.width * scaleFactor,
+          TextIzquierdaSUP.height * scaleFactor
         );
 
-        // Dibuja FraseClaro.png en la esquina superior derecha
         ctx.drawImage(
           TextDerechaSUP,
-          canvas.width - TextDerechaSUP.width - 20,
+          canvas.width - TextDerechaSUP.width * scaleFactor - 20,
           20,
-          TextDerechaSUP.width,
-          TextDerechaSUP.height
+          TextDerechaSUP.width * scaleFactor,
+          TextDerechaSUP.height * scaleFactor
         );
 
         // Dibuja LogosPequenios.png en la esquina inferior derecha
