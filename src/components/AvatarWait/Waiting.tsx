@@ -13,6 +13,7 @@ interface WaitingProps {
   onEmailChange: (email: string) => void;
   onNombreChange: (nombre: string) => void;
   onCedulaChange: (cedula: string) => void;
+  onConsentimientoChange: (consentimiento: string) => void;
   onShowPolicy: () => void;
   onContinue: (mergedUrl: string) => void; // Se recibe la URL fusionada
 }
@@ -27,6 +28,7 @@ const Waiting: React.FC<WaitingProps> = ({
   onEmailChange,
   onNombreChange,
   onCedulaChange,
+  onConsentimientoChange,
   onShowPolicy,
   onContinue,
 }) => {
@@ -107,7 +109,12 @@ const Waiting: React.FC<WaitingProps> = ({
           />
 
           <div className="checkbox-container">
-            <input type="checkbox" className="checkbox" id="tratamiento" />
+            <input
+              type="checkbox"
+              className="checkbox"
+              id="tratamiento"
+              onChange={(e) => onConsentimientoChange(e.target.value)}
+            />
             <label htmlFor="tratamiento">
               <span>
                 Consentimiento

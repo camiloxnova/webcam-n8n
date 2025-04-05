@@ -10,6 +10,7 @@ interface AvatarResultProps {
   email: string;
   nombre: string;
   cedula: string;
+  consentimiento: string;
   imageUrl: string; // Imagen ya fusionada
   onReset: () => void;
 }
@@ -18,6 +19,7 @@ const AvatarResult: React.FC<AvatarResultProps> = ({
   email,
   nombre,
   cedula,
+  consentimiento,
   imageUrl,
   onReset,
 }) => {
@@ -31,23 +33,30 @@ const AvatarResult: React.FC<AvatarResultProps> = ({
       hasUploadedRef.current = true;
 
       try {
-        const storageRef = ref(storage, `avatars/${email}-${Date.now()}.png`);
+        const storageRef = ref(
+          storage,
+          `avatars_scotia/${email}-${Date.now()}.png`
+        );
         await uploadString(storageRef, dataUrl, "data_url");
         const downloadURL = await getDownloadURL(storageRef);
-        await addDoc(collection(db, "imagenesScotiaDev"), {
+
+        const datosFirestore = {
           email,
           nombre,
           cedula,
           imageUrl: downloadURL,
           date: new Date(),
+          consentimientoAceptado: consentimiento ? "Sí" : "No",
           correoEnviado: false,
-        });
+        };
+        console.log("🚀 ~ datosFirestore:", datosFirestore);
+        await addDoc(collection(db, "imagenesScotiaDev"), datosFirestore);
         setUploadedImageUrl(downloadURL);
       } catch (error) {
         console.error("Error al subir imagen:", error);
       }
     },
-    [email, nombre, cedula]
+    [email, nombre, cedula, consentimiento]
   );
 
   useEffect(() => {

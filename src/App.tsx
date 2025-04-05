@@ -24,6 +24,7 @@ function App() {
   const [email, setEmail] = useState("");
   const [nombre, setNombre] = useState("");
   const [cedula, setCedula] = useState("");
+  const [consentimiento, setConsentimiento] = useState("");
   const [imagenGenerada, setImagenGenerada] = useState(false); // Nueva bandera
   const [tipoSuenio, setTipoSuenio] = useState("");
 
@@ -33,6 +34,7 @@ function App() {
     setEmail("");
     setNombre("");
     setCedula("");
+    setConsentimiento("");
     setImagenGenerada(false); // Reiniciamos la bandera al iniciar el proceso
     setStep("waiting");
   };
@@ -47,6 +49,10 @@ function App() {
   };
   const handleCedulaChange = (newCedula: string) => {
     setCedula(newCedula);
+  };
+  const handleConsentimientoChange = (newConsentimiento: string) => {
+    setConsentimiento(newConsentimiento);
+    console.log("Consentimiento:", newConsentimiento);
   };
 
   // Callback para recibir la selección de "sueño" desde AvatarPhoto
@@ -91,7 +97,7 @@ function App() {
     return () => {
       if (interval) clearInterval(interval);
     };
-  }, [step, lastImageUrl, email, nombre, cedula]);
+  }, [step, lastImageUrl, email, nombre, cedula, consentimiento]);
 
   return (
     <div style={{ width: "100vw", height: "100vh" }}>
@@ -112,6 +118,7 @@ function App() {
           onEmailChange={handleEmailChange}
           onNombreChange={handleNombreChange}
           onCedulaChange={handleCedulaChange}
+          onConsentimientoChange={handleConsentimientoChange}
           onShowPolicy={() => setStep("policy")}
           onContinue={handleContinue} // Función para pasar a AvatarResult
         />
@@ -122,6 +129,7 @@ function App() {
           email={email}
           nombre={nombre}
           cedula={cedula}
+          consentimiento={consentimiento}
           onReset={() => setStep("photo")}
         />
       )}
