@@ -2,9 +2,8 @@ import React from "react";
 import "./Waiting.scss";
 
 // import fondo from "../../assets/img/fondo.png";
-import logo from "../../assets/img/empresas.png";
+import logo from "../../assets/img/logoScotia.png";
 //import waitingVideo from "../../assets/videos/video.mp4";
-import gitEspera from "../../assets/img/esperacargando.gif";
 
 interface WaitingProps {
   email: string;
@@ -32,10 +31,15 @@ const Waiting: React.FC<WaitingProps> = ({
   return (
     <div className="container">
       {/* <img src={fondo} alt="Avatar" className="fondo" /> */}
-      <div className="card">
-        <img src={logo} alt="Logo" className="clarologo" />
 
+      <div className="header">
+        <img src={logo} alt="Logo Scotia" className="logo" />
+      </div>
+
+      <div className="card">
         {/* Se muestra un contenido distinto según si la imagen ya se generó o no */}
+        <h2 className="subtitle">AVATAR AI</h2>
+
         {imagenGenerada ? (
           <div className="avatar-container-ready">
             <h2 className="subtitlewait">¡Tu imagen IA está lista!</h2>
@@ -46,16 +50,12 @@ const Waiting: React.FC<WaitingProps> = ({
           </div>
         ) : (
           <div className="avatar-container-wait">
-            <h2 className="subtitlewait">Espera unos segundos ...</h2>
-
-            <img
-              src={gitEspera}
-              alt="LOGO CARGANDO"
-              style={{ width: "231px" }}
-            />
             <p className="waiting-text">
-              ¡Comparte tu avatar IA en redes sociales! Descarga la imagen desde
-              tu correo.
+              Espera...
+              <br />
+              ¡A segundos de
+              <br /> cumplir tus
+              <br /> sueños!
             </p>
           </div>
         )}
