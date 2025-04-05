@@ -45,7 +45,7 @@ const AvatarPhoto: React.FC<AvatarPhotoProps> = ({
     }
   };
 
-  // Envía la imagen capturada al endpoint de n8n
+  // Envía la imagedn capturada al endpoint de n8n
   const handleProcessImage = async () => {
     if (!capturedImage) return;
     const formData = new FormData();
