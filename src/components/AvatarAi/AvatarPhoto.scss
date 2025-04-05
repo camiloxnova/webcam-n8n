@@ -10,6 +10,20 @@
   position: relative;
 }
 
+/* Cabecera superior con fondo rojo */
+.header {
+  width: 100%;
+  background-color: #ec111a;
+  padding: 10px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.logo {
+  height: 69px;
+}
+
 .fondo {
   width: 100vw;
   height: 100vh;

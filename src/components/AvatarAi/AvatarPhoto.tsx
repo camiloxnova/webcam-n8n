@@ -83,9 +83,13 @@ const AvatarPhoto: React.FC<AvatarPhotoProps> = ({ onProcess }) => {
 
   return (
     <div className="container">
+      {/* Cabecera superior con fondo rojo y logo centrado */}
+      <div className="header">
+        <img src={logo} alt="Logo Scotia" className="logo" />
+      </div>
+
       {/* <img src={fondo} alt="Fondo" className="fondo" /> */}
       <div className="card">
-        <img src={logo} alt="Logo" className="clarologo" />
         <h2 className="subtitle">AVATAR AI</h2>
         <div className="avatar-container cam">
           {capturedImageUrl ? (
@@ -120,11 +124,9 @@ const AvatarPhoto: React.FC<AvatarPhotoProps> = ({ onProcess }) => {
           </button>
         </div>
         <form onSubmit={handleSubmit}>
-          {capturedImageUrl && (
-            <button type="submit" className="button">
-              Procesar
-            </button>
-          )}
+          <button type="submit" className="button" disabled={!capturedImageUrl}>
+            Enviar
+          </button>
         </form>
       </div>
     </div>
