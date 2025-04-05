@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import "./AvatarPhoto.scss";
-import logo from "../../assets/img/empresas.png";
+import logo from "../../assets/img/logoScotia.png";
 
 import { storage, db } from "../../firebaseConfig";
 import { ref, uploadString, getDownloadURL } from "firebase/storage";
@@ -57,20 +57,30 @@ const AvatarResult: React.FC<AvatarResultProps> = ({
   }, [imageUrl, uploadMergedImage]); // Ahora `useEffect` tiene todas sus dependencias
 
   return (
-    <div className="containerResult">
-      <div className="card">
-        <img src={logo} alt="Logo" className="clarologo" />
-        <h2 className="subtitle">AVATAR AI</h2>
-        <div className="avatar-container">
-          <img
-            src={uploadedImageUrl}
-            className="avatar"
-            alt="Avatar generado"
-          />
+    <div className="containerResultFinal">
+      <div className="header-bar">
+        <img src={logo} alt="Logo Scotia" className="logo-scotia" />
+      </div>
+
+      <div className="result-wrapper">
+        <div className="card">
+          <h2 className="subtitle">AVATAR AI</h2>
+          <div className="avatar-container">
+            <img
+              src={uploadedImageUrl}
+              className="avatar"
+              alt="Avatar generado"
+            />
+          </div>
+          <button
+            type="button"
+            className="button"
+            onClick={onReset}
+            style={{ width: "250px" }}
+          >
+            Empezar de nuevo
+          </button>
         </div>
-        <button type="button" className="button" onClick={onReset}>
-          Empezar de nuevo
-        </button>
       </div>
     </div>
   );

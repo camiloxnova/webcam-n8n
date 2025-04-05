@@ -10,6 +10,26 @@
   position: relative;
 }
 
+.containerResultFinal {
+  width: 100vw;
+  height: 100vh;
+  // display: flex;
+  flex-direction: column; // Para que la cabecera quede arriba y el contenido se alinee debajo
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  overflow: hidden;
+  position: relative;
+}
+
+.result-wrapper {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
 .container {
   width: 100vw;
   height: 100vh;
