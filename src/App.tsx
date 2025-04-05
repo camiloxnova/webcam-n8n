@@ -10,7 +10,7 @@ function MainApp() {
     fetch("https://proyectoshm.com/marco_pruebas/imagen/clear_image_data.php")
       .then((response) => response.json())
       .then((data) => {
-        console.log("Clear WS:", data.message);
+        console.log("Clear WS :", data.message);
       })
       .catch((error) => console.error("Error limpiando el archivo:", error));
   }, []);
