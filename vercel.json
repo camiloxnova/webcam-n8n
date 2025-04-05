@@ -8,8 +8,8 @@
   ],
   "rewrites": [
     {
-      "source": "/(?!aviso|aviso\\.html)(.*)",
-      "destination": "/"
+      "source": "/(?!aviso\\.html)(.*)",
+      "destination": "/index.html"
     }
   ]
 }
