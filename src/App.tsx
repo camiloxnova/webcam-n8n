@@ -1,10 +1,11 @@
+import { Routes, Route, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import AvatarPhoto from "./components/AvatarAi/AvatarPhoto";
 import AvatarResult from "./components/AvatarAi/AvatarResult";
 import Waiting from "./components/AvatarWait/Waiting";
 import Policy from "./Policy";
 
-function App() {
+function MainApp() {
   useEffect(() => {
     fetch("https://proyectoshm.com/marco_pruebas/imagen/clear_image_data.php")
       .then((response) => response.json())
@@ -75,7 +76,7 @@ function App() {
       interval = setInterval(async () => {
         try {
           const response = await fetch(
-            "https://proyectoshm.com/marco_pruebas/imagen/callback.php"
+            "https://proyectoshm.com/marco_pruebas/imagen/callback_dev.php"
           );
           const data = await response.json();
           // Si existe una imagen nueva, se actualiza el estado y se guarda en Firestore.
@@ -135,6 +136,20 @@ function App() {
       )}
       {step === "policy" && <Policy onBack={() => setStep("waiting")} />}
     </div>
+  );
+}
+
+// Componente principal que define las rutas
+function App() {
+  const navigate = useNavigate();
+  return (
+    <Routes>
+      <Route path="/" element={<MainApp />} />
+      <Route
+        path="/aviso_privacidad"
+        element={<Policy onBack={() => navigate("/")} />}
+      />
+    </Routes>
   );
 }
 
