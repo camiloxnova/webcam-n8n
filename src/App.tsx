@@ -75,7 +75,7 @@ function App() {
       interval = setInterval(async () => {
         try {
           const response = await fetch(
-            "https://proyectoshm.com/marco_pruebas/imagen/callback_dev.php"
+            "https://proyectoshm.com/marco_pruebas/imagen/callback.php"
           );
           const data = await response.json();
           // Si existe una imagen nueva, se actualiza el estado y se guarda en Firestore.
@@ -91,7 +91,7 @@ function App() {
         } catch (error) {
           console.error("Error al obtener la imagen:", error);
         }
-      }, 50); // Consulta cada 5 segundos
+      }, 4000); // Consulta cada 5 segundos
     }
 
     return () => {
