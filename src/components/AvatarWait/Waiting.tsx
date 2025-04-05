@@ -9,6 +9,7 @@ interface WaitingProps {
   cedula: string;
   imagenGenerada: boolean;
   imageUrl: string; // Nuevo prop para la URL de la imagen a fusionar
+  tipoSuenio: string;
   onEmailChange: (email: string) => void;
   onNombreChange: (nombre: string) => void;
   onCedulaChange: (cedula: string) => void;
@@ -22,6 +23,7 @@ const Waiting: React.FC<WaitingProps> = ({
   cedula,
   imagenGenerada,
   imageUrl,
+  tipoSuenio,
   onEmailChange,
   onNombreChange,
   onCedulaChange,
@@ -55,7 +57,11 @@ const Waiting: React.FC<WaitingProps> = ({
           <div className="avatar-container-ready">
             {/* Si no se ha ejecutado el merge, y existe imageUrl, lo lanzamos */}
             {!mergedImage && imageUrl && (
-              <MergeImage imageUrl={imageUrl} onMerged={handleMerged} />
+              <MergeImage
+                imageUrl={imageUrl}
+                onMerged={handleMerged}
+                tipoSuenio={tipoSuenio}
+              />
             )}
           </div>
         ) : (

@@ -127,6 +127,7 @@ function App() {
   const [nombre, setNombre] = useState("");
   const [cedula, setCedula] = useState("");
   const [imagenGenerada, setImagenGenerada] = useState(false); // Nueva bandera
+  const [tipoSuenio, setTipoSuenio] = useState("");
 
   // Esta función se invoca en AvatarPhoto al enviar la petición a n8n.
   // Además, al cambiar a Waiting se limpia el email para que el usuario lo ingrese nuevamente.
@@ -148,6 +149,12 @@ function App() {
   };
   const handleCedulaChange = (newCedula: string) => {
     setCedula(newCedula);
+  };
+
+  // Callback para recibir la selección de "sueño" desde AvatarPhoto
+  const handleDreamChange = (dream: string) => {
+    setTipoSuenio(dream);
+    console.log("Tipo de sueño seleccionado:", dream);
   };
 
   // Función para pasar a AvatarResult cuando el usuario haga clic en el botón.
@@ -190,7 +197,12 @@ function App() {
 
   return (
     <div style={{ width: "100vw", height: "100vh" }}>
-      {step === "photo" && <AvatarPhoto onProcess={handleProcess} />}
+      {step === "photo" && (
+        <AvatarPhoto
+          onProcess={handleProcess}
+          onDreamChange={handleDreamChange}
+        />
+      )}
       {step === "waiting" && (
         <Waiting
           email={email}
@@ -198,6 +210,7 @@ function App() {
           cedula={cedula}
           imagenGenerada={imagenGenerada} // Prop bandera
           imageUrl={imageUrl}
+          tipoSuenio={tipoSuenio}
           onEmailChange={handleEmailChange}
           onNombreChange={handleNombreChange}
           onCedulaChange={handleCedulaChange}

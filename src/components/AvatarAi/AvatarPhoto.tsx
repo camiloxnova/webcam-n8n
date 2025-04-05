@@ -9,12 +9,16 @@ import Swal from "sweetalert2"; // Import sweetalert2
 
 interface AvatarPhotoProps {
   onProcess: (email: string) => void;
+  onDreamChange: (dream: string) => void;
 }
 interface WebcamRef {
   captureImage: () => Promise<Blob>;
 }
 
-const AvatarPhoto: React.FC<AvatarPhotoProps> = ({ onProcess }) => {
+const AvatarPhoto: React.FC<AvatarPhotoProps> = ({
+  onProcess,
+  onDreamChange,
+}) => {
   const [email] = useState("");
   const [capturedImage, setCapturedImage] = useState<Blob | null>(null);
   const [capturedImageUrl, setCapturedImageUrl] = useState<string>("");
@@ -46,6 +50,7 @@ const AvatarPhoto: React.FC<AvatarPhotoProps> = ({ onProcess }) => {
     if (!capturedImage) return;
     const formData = new FormData();
     formData.append("image", capturedImage, "webcam-image.jpg");
+    formData.append("selectedDream", selectedDream);
     try {
       console.log("Enviando imagen...");
       //onProcess(); //TEMPORAL NO DEBE IR AQUI
@@ -112,7 +117,11 @@ const AvatarPhoto: React.FC<AvatarPhotoProps> = ({ onProcess }) => {
           <div className="select-container">
             <select
               value={selectedDream}
-              onChange={(e) => setSelectedDream(e.target.value)}
+              onChange={(e) => {
+                const dream = e.target.value;
+                setSelectedDream(dream);
+                onDreamChange(dream); // Llama al callback para elevar la selección
+              }}
             >
               <option value="">Selecciona tu sueño</option>
               <option value="greencity">Mi Sueño Greencity</option>
