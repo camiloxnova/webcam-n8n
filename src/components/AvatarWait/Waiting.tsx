@@ -1,7 +1,7 @@
 import React from "react";
 import "./Waiting.scss";
 
-import fondo from "../../assets/img/fondo.png";
+// import fondo from "../../assets/img/fondo.png";
 import logo from "../../assets/img/empresas.png";
 //import waitingVideo from "../../assets/videos/video.mp4";
 import gitEspera from "../../assets/img/esperacargando.gif";
@@ -31,7 +31,7 @@ const Waiting: React.FC<WaitingProps> = ({
 
   return (
     <div className="container">
-      <img src={fondo} alt="Avatar" className="fondo" />
+      {/* <img src={fondo} alt="Avatar" className="fondo" /> */}
       <div className="card">
         <img src={logo} alt="Logo" className="clarologo" />
 

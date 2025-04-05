@@ -1,11 +1,11 @@
 import React, { useState, useRef } from "react";
 import "./AvatarPhoto.scss";
-import fondo from "../../assets/img/fondo.png";
-import logo from "../../assets/img/empresas.png";
+// import fondo from "../../assets/img/fondo.png";
+import logo from "../../assets/img/logoScotia.png";
 import WebcamScene from "../WebcamScene";
 import axios from "axios";
 import Swal from "sweetalert2"; // Import sweetalert2
-import { FaCamera } from "react-icons/fa";
+// import { FaCamera } from "react-icons/fa";
 
 interface AvatarPhotoProps {
   onProcess: (email: string) => void;
@@ -83,7 +83,7 @@ const AvatarPhoto: React.FC<AvatarPhotoProps> = ({ onProcess }) => {
 
   return (
     <div className="container">
-      <img src={fondo} alt="Fondo" className="fondo" />
+      {/* <img src={fondo} alt="Fondo" className="fondo" /> */}
       <div className="card">
         <img src={logo} alt="Logo" className="clarologo" />
         <h2 className="subtitle">AVATAR AI</h2>
@@ -108,13 +108,13 @@ const AvatarPhoto: React.FC<AvatarPhotoProps> = ({ onProcess }) => {
           >
             <div
               style={{
-                display: "flex",
+                // display: "flex",
                 alignItems: "center",
                 justifyContent: "space-between",
                 width: "100%",
               }}
             >
-              <FaCamera size={38} style={{ marginRight: "8px" }} />
+              {/* <FaCamera size={38} style={{ marginRight: "8px" }} /> */}
               {capturedImageUrl ? "Tomar otra" : "Tomar foto"}
             </div>
           </button>

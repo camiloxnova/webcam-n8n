@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import "./AvatarPhoto.scss";
-import fondo from "../../assets/img/fondo.png";
+// import fondo from "../../assets/img/fondo.png";
 import logo from "../../assets/img/empresas.png";
 // import logor from "../../assets/img/claro-r.png";
 
@@ -53,7 +53,7 @@ const AvatarResult: React.FC<AvatarResultProps> = ({
 
   return (
     <div className="containerResult">
-      <img src={fondo} alt="Fondo" className="fondo" />
+      {/* <img src={fondo} alt="Fondo" className="fondo" /> */}
       <div className="card">
         <img src={logo} alt="Logo" className="clarologo" />
         <h2 className="subtitle">AVATAR AI</h2>
