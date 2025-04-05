@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 
 const Policy = ({ onBack }: { onBack: () => void }) => {
+  const location = useLocation();
+  // Si la ruta es /aviso_privacidad, no mostramos el botón de "Volver"
+  const showBackButton = location.pathname !== "/aviso_privacidad";
+
   // Estado para conocer el ancho actual de la ventana
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
@@ -232,9 +237,11 @@ const Policy = ({ onBack }: { onBack: () => void }) => {
           conservarlos, sin perjuicio de que se puedan eliminar en un plazo
           menor.
         </p>
-        <button style={buttonStyle} onClick={onBack}>
-          Volver
-        </button>
+        {showBackButton && (
+          <button style={buttonStyle} onClick={onBack}>
+            Volver
+          </button>
+        )}
       </div>
     </div>
   );
