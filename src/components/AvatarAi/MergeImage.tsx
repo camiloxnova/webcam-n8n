@@ -108,7 +108,7 @@ const MergeImage: React.FC<MergeImageProps> = ({
       .catch((error) => {
         console.error("Error al cargar las imágenes:", error);
       });
-  }, [imageUrl, onMerged]);
+  }, [imageUrl, onMerged, tipoSuenio]);
 
   // El canvas se oculta ya que solo lo usamos para generar la imagen final
   return <canvas ref={canvasRef} style={{ display: "none" }} />;
