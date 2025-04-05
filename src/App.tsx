@@ -151,7 +151,8 @@ function App() {
   };
 
   // Función para pasar a AvatarResult cuando el usuario haga clic en el botón.
-  const handleContinue = () => {
+  const handleContinue = (mergedUrl: string) => {
+    setImageUrl(mergedUrl);
     setStep("result");
   };
 
@@ -196,6 +197,7 @@ function App() {
           nombre={nombre}
           cedula={cedula}
           imagenGenerada={imagenGenerada} // Prop bandera
+          imageUrl={imageUrl}
           onEmailChange={handleEmailChange}
           onNombreChange={handleNombreChange}
           onCedulaChange={handleCedulaChange}

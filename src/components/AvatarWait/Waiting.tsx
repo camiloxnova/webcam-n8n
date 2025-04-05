@@ -1,17 +1,19 @@
-import React from "react";
+import React, { useState, useRef } from "react";
 import "./Waiting.scss";
 import logo from "../../assets/img/logoScotia.png";
+import MergeImage from "../AvatarAi/MergeImage"; // Asegúrate de la ruta correcta
 
 interface WaitingProps {
   email: string;
   nombre: string;
-  cedula: string; // Si decides manejar la cédula aquí
-  imagenGenerada: boolean; // Indica si la imagen ya se generó
+  cedula: string;
+  imagenGenerada: boolean;
+  imageUrl: string; // Nuevo prop para la URL de la imagen a fusionar
   onEmailChange: (email: string) => void;
   onNombreChange: (nombre: string) => void;
-  onCedulaChange: (cedula: string) => void; // Si decides manejar la cédula aquí
+  onCedulaChange: (cedula: string) => void;
   onShowPolicy: () => void;
-  onContinue: () => void; // Para continuar a AvatarResult
+  onContinue: (mergedUrl: string) => void; // Se recibe la URL fusionada
 }
 
 const Waiting: React.FC<WaitingProps> = ({
@@ -19,49 +21,57 @@ const Waiting: React.FC<WaitingProps> = ({
   nombre,
   cedula,
   imagenGenerada,
+  imageUrl,
   onEmailChange,
   onNombreChange,
   onCedulaChange,
   onShowPolicy,
   onContinue,
 }) => {
-  // Si deseas manejar la cédula en el estado del padre, añade props similares a email/nombre
-  // De momento, la manejamos localmente aquí como ejemplo:
+  // Controlamos que el merge se ejecute solo una vez
+  const [mergedImage, setMergedImage] = useState<string | null>(null);
+  const hasMergedRef = useRef(false);
+
+  const handleMerged = async (dataUrl: string) => {
+    if (hasMergedRef.current) return;
+    hasMergedRef.current = true;
+    setMergedImage(dataUrl);
+    // Una vez terminado el merge, redirigimos automáticamente a AvatarResult
+    onContinue(dataUrl);
+  };
 
   return (
     <div className="waiting-container">
-      {/* Barra roja superior con "Scotia" o el logo */}
+      {/* Barra roja superior con el logo */}
       <div className="header-bar">
-        {/* Si quieres texto en vez de imagen, reemplaza <img> por <h1>Scotia</h1> */}
         <img src={logo} alt="Logo Scotia" className="logo-scotia" />
       </div>
 
       {/* Tarjeta de contenido */}
       <div className="waiting-card">
-        {/* Subtítulo principal */}
         <h2 className="subtitle">Avatar IA</h2>
 
-        {/* Sección de mensaje de espera o imagen generada */}
         {imagenGenerada ? (
           <div className="avatar-container-ready">
-            <h2 className="subtitle-wait">¡Tu imagen IA está lista!</h2>
-            <p className="ready-text">
-              Disfruta de un avatar único que fusiona arte y tecnología. <br />
-              ¡Haz clic para verlo!
-            </p>
+            {/* Si no se ha ejecutado el merge, y existe imageUrl, lo lanzamos */}
+            {!mergedImage && imageUrl && (
+              <MergeImage imageUrl={imageUrl} onMerged={handleMerged} />
+            )}
           </div>
         ) : (
-          <div className="avatar-container-wait">
-            <p className="waiting-text">
-              Espera...
-              <br /> ¡A segundos de
-              <br /> cumplir tus
-              <br /> sueños!
-            </p>
-          </div>
+          ""
         )}
 
-        {/* Formulario con placeholders en lugar de labels */}
+        <div className="avatar-container-wait">
+          <p className="waiting-text">
+            Espera...
+            <br /> ¡A segundos de
+            <br /> cumplir tus
+            <br /> sueños!
+          </p>
+        </div>
+
+        {/* Formulario de datos */}
         <form className="waiting-form">
           <input
             type="text"
@@ -81,7 +91,6 @@ const Waiting: React.FC<WaitingProps> = ({
             required
           />
 
-          {/* Campo de cédula (ejemplo local) */}
           <input
             type="text"
             placeholder="Cédula"
@@ -91,7 +100,6 @@ const Waiting: React.FC<WaitingProps> = ({
             required
           />
 
-          {/* Checkbox de consentimiento */}
           <div className="checkbox-container">
             <input type="checkbox" className="checkbox" id="tratamiento" />
             <label htmlFor="tratamiento">
@@ -111,12 +119,6 @@ const Waiting: React.FC<WaitingProps> = ({
             </label>
           </div>
         </form>
-
-        {/* Botón para ver el avatar si la imagen ya se generó */}
-
-        <button className="button" onClick={onContinue}>
-          Ver avatar
-        </button>
       </div>
     </div>
   );

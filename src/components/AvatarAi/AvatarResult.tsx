@@ -1,20 +1,16 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import "./AvatarPhoto.scss";
-// import fondo from "../../assets/img/fondo.png";
 import logo from "../../assets/img/empresas.png";
-// import logor from "../../assets/img/claro-r.png";
 
 import { storage, db } from "../../firebaseConfig";
 import { ref, uploadString, getDownloadURL } from "firebase/storage";
 import { collection, addDoc } from "firebase/firestore";
 
-import MergeImage from "./MergeImage";
-
 interface AvatarResultProps {
   email: string;
   nombre: string;
   cedula: string;
-  imageUrl: string;
+  imageUrl: string; // Imagen ya fusionada
   onReset: () => void;
 }
 
@@ -25,74 +21,56 @@ const AvatarResult: React.FC<AvatarResultProps> = ({
   imageUrl,
   onReset,
 }) => {
-  const [mergedImage, setMergedImage] = useState<string | null>(null);
-  const hasMergedRef = useRef(false);
+  const [uploadedImageUrl, setUploadedImageUrl] = useState<string>(imageUrl);
+  const hasUploadedRef = useRef(false);
 
-  const handleMerged = async (dataUrl: string) => {
-    if (hasMergedRef.current) return;
-    hasMergedRef.current = true;
+  // Memoiza la función para evitar que cambie en cada render
+  const uploadMergedImage = useCallback(
+    async (dataUrl: string) => {
+      if (hasUploadedRef.current) return;
+      hasUploadedRef.current = true;
 
-    try {
-      const storageRef = ref(storage, `avatars/${email}-${Date.now()}.png`);
-      await uploadString(storageRef, dataUrl, "data_url");
-      const downloadURL = await getDownloadURL(storageRef);
-      await addDoc(collection(db, "imagenesScotiaDev"), {
-        email: email,
-        nombre: nombre,
-        cedula: cedula,
-        imageUrl: downloadURL,
-        date: new Date(),
-        correoEnviado: false,
-      });
-      console.log(
-        "Imagen guardada en Storage y URL en Firestore:",
-        downloadURL
-      );
-      setMergedImage(downloadURL);
-    } catch (error) {
-      console.error("Error al subir imagen:", error);
+      try {
+        const storageRef = ref(storage, `avatars/${email}-${Date.now()}.png`);
+        await uploadString(storageRef, dataUrl, "data_url");
+        const downloadURL = await getDownloadURL(storageRef);
+        await addDoc(collection(db, "imagenesScotiaDev"), {
+          email,
+          nombre,
+          cedula,
+          imageUrl: downloadURL,
+          date: new Date(),
+          correoEnviado: false,
+        });
+        setUploadedImageUrl(downloadURL);
+      } catch (error) {
+        console.error("Error al subir imagen:", error);
+      }
+    },
+    [email, nombre, cedula]
+  );
+
+  useEffect(() => {
+    if (!hasUploadedRef.current) {
+      uploadMergedImage(imageUrl);
     }
-  };
+  }, [imageUrl, uploadMergedImage]); // Ahora `useEffect` tiene todas sus dependencias
 
   return (
     <div className="containerResult">
-      {/* <img src={fondo} alt="Fondo" className="fondo" /> */}
       <div className="card">
         <img src={logo} alt="Logo" className="clarologo" />
         <h2 className="subtitle">AVATAR AI</h2>
-        <div className="avatar-container" style={{ position: "relative" }}>
-          <MergeImage imageUrl={imageUrl} onMerged={handleMerged} />
-
-          {/* Overlay de carga */}
-          {!mergedImage && (
-            <div className="processing-overlay">
-              <div className="spinner"></div>
-              <p className="processing-text">
-                Estamos creando tu avatar, ¡la magia está en proceso!
-              </p>
-            </div>
-          )}
-
-          {mergedImage && (
-            <img
-              src={mergedImage}
-              className="avatar"
-              alt="Imagen final fusionada"
-            />
-          )}
+        <div className="avatar-container">
+          <img
+            src={uploadedImageUrl}
+            className="avatar"
+            alt="Avatar generado"
+          />
         </div>
-        {/* <div className="result">
-          <img src={logor} alt="Logo Resultado" className="clarologo" />
-          <p className="result-text">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tem por incididunt ut labore et dolore magna aliqua.
-          </p> 
-        </div> */}
-        {mergedImage && (
-          <button type="submit" className="button" onClick={onReset}>
-            Empezar de nuevo
-          </button>
-        )}
+        <button type="button" className="button" onClick={onReset}>
+          Empezar de nuevo
+        </button>
       </div>
     </div>
   );
