@@ -204,46 +204,6 @@ form {
   font-size: 14px;
 }
 
-.checkbox-container {
-  display: flex;
-  align-items: center;
-  font-size: 12px;
-  margin-top: 10px;
-  color: #bbb;
-  gap: 5px;
-  width: 80%;
-  margin: 10px auto;
-
-  span {
-    font-size: 9px;
-  }
-}
-
-.checkbox {
-  margin-right: 0;
-  border-radius: 4px;
-  width: 15px !important;
-  height: 15px !important;
-  min-width: 15px;
-  appearance: none;
-  background: #330303;
-  display: flex;
-  justify-content: center;
-}
-
-.checkbox:checked:before {
-  background-color: white;
-  border-radius: 4px;
-  content: "";
-  width: 13px;
-  height: 13px;
-  display: flex;
-  border-radius: 100%;
-  justify-content: center;
-  align-content: center;
-  align-self: center;
-}
-
 .button {
   width: 200px;
   height: 57px;

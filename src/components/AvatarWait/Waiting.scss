@@ -95,42 +95,44 @@
 
 /* Checkbox y su contenedor */
 .checkbox-container {
-  width: 100%;
-  max-width: 300px;
-  margin-top: 15px;
-  text-align: left;
   display: flex;
-  align-items: flex-start;
-  gap: 8px;
+  align-items: center;
+  font-size: 18px;
+  margin-top: 10px;
+  color: #ec111a;
+  gap: 5px;
+  width: 80%;
+  margin: 10px auto;
 
-  label {
-    font-size: 14px;
-    color: #ec111a;
-    line-height: 1.2;
-
-    a {
-      color: #ec111a;
-      text-decoration: underline;
-      font-size: 12px;
-    }
+  span {
+    font-size: 9px;
   }
 }
 
-/* Checkbox custom */
 .checkbox {
-  appearance: none;
-  width: 20px;
-  height: 20px;
-  margin-top: 2px;
-  border: 2px solid #ec111a;
+  margin-right: 0;
   border-radius: 4px;
-  cursor: pointer;
-  outline: none;
-  background-color: #fff;
+  width: 15px !important;
+  height: 15px !important;
+  min-width: 15px;
+  appearance: none;
+  background: #ffffff;
+  display: flex;
+  justify-content: center;
+  color: #ec111a;
+  border: double;
+}
 
-  &:checked {
-    background-color: #ec111a;
-  }
+.checkbox:checked:before {
+  background-color: #ec111a;
+  content: "";
+  width: 13px;
+  height: 10px;
+  display: flex;
+
+  justify-content: center;
+  align-content: center;
+  align-self: center;
 }
 
 /* Botón para "Ver avatar" */
