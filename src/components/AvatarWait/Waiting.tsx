@@ -1,13 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
 import "./Waiting.scss";
 import logo from "../../assets/img/logoScotia.png";
 
 interface WaitingProps {
   email: string;
   nombre: string;
+  cedula: string; // Si decides manejar la cédula aquí
   imagenGenerada: boolean; // Indica si la imagen ya se generó
   onEmailChange: (email: string) => void;
   onNombreChange: (nombre: string) => void;
+  onCedulaChange: (cedula: string) => void; // Si decides manejar la cédula aquí
   onShowPolicy: () => void;
   onContinue: () => void; // Para continuar a AvatarResult
 }
@@ -15,15 +17,16 @@ interface WaitingProps {
 const Waiting: React.FC<WaitingProps> = ({
   email,
   nombre,
+  cedula,
   imagenGenerada,
   onEmailChange,
   onNombreChange,
+  onCedulaChange,
   onShowPolicy,
   onContinue,
 }) => {
   // Si deseas manejar la cédula en el estado del padre, añade props similares a email/nombre
   // De momento, la manejamos localmente aquí como ejemplo:
-  const [cedula, setCedula] = useState("");
 
   return (
     <div className="waiting-container">
@@ -83,8 +86,9 @@ const Waiting: React.FC<WaitingProps> = ({
             type="text"
             placeholder="Cédula"
             value={cedula}
-            onChange={(e) => setCedula(e.target.value)}
+            onChange={(e) => onCedulaChange(e.target.value)}
             className="input"
+            required
           />
 
           {/* Checkbox de consentimiento */}

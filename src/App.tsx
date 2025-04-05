@@ -125,6 +125,7 @@ function App() {
   const [lastImageUrl, setLastImageUrl] = useState("");
   const [email, setEmail] = useState("");
   const [nombre, setNombre] = useState("");
+  const [cedula, setCedula] = useState("");
   const [imagenGenerada, setImagenGenerada] = useState(false); // Nueva bandera
 
   // Esta función se invoca en AvatarPhoto al enviar la petición a n8n.
@@ -132,6 +133,7 @@ function App() {
   const handleProcess = () => {
     setEmail("");
     setNombre("");
+    setCedula("");
     setImagenGenerada(false); // Reiniciamos la bandera al iniciar el proceso
     setStep("waiting");
   };
@@ -143,6 +145,9 @@ function App() {
 
   const handleNombreChange = (newNombre: string) => {
     setNombre(newNombre);
+  };
+  const handleCedulaChange = (newCedula: string) => {
+    setCedula(newCedula);
   };
 
   // Función para pasar a AvatarResult cuando el usuario haga clic en el botón.
@@ -180,7 +185,7 @@ function App() {
     return () => {
       if (interval) clearInterval(interval);
     };
-  }, [step, lastImageUrl, email, nombre]);
+  }, [step, lastImageUrl, email, nombre, cedula]);
 
   return (
     <div style={{ width: "100vw", height: "100vh" }}>
@@ -189,9 +194,11 @@ function App() {
         <Waiting
           email={email}
           nombre={nombre}
+          cedula={cedula}
           imagenGenerada={imagenGenerada} // Prop bandera
           onEmailChange={handleEmailChange}
           onNombreChange={handleNombreChange}
+          onCedulaChange={handleCedulaChange}
           onShowPolicy={() => setStep("policy")}
           onContinue={handleContinue} // Función para pasar a AvatarResult
         />
@@ -201,6 +208,7 @@ function App() {
           imageUrl={imageUrl}
           email={email}
           nombre={nombre}
+          cedula={cedula}
           onReset={() => setStep("photo")}
         />
       )}
