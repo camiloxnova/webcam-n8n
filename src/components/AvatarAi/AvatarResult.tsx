@@ -54,7 +54,7 @@ const AvatarResult: React.FC<AvatarResultProps> = ({
     if (!hasUploadedRef.current) {
       uploadMergedImage(imageUrl);
     }
-  }, [imageUrl, uploadMergedImage]); // Ahora `useEffect` tiene todas sus dependencias
+  }, [imageUrl, uploadMergedImage]); // Ahora `useEffect` tiene todas  sus dependencias
 
   return (
     <div className="containerResultFinal">
