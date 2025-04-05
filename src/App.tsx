@@ -146,7 +146,7 @@ function App() {
     <Routes>
       <Route path="/" element={<MainApp />} />
       <Route
-        path="/aviso_privacidad"
+        path="/aviso_privacidadd"
         element={<Policy onBack={() => navigate("/")} />}
       />
     </Routes>
