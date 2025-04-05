@@ -18,6 +18,8 @@ const AvatarPhoto: React.FC<AvatarPhotoProps> = ({ onProcess }) => {
   const [email] = useState("");
   const [capturedImage, setCapturedImage] = useState<Blob | null>(null);
   const [capturedImageUrl, setCapturedImageUrl] = useState<string>("");
+  const [selectedDream, setSelectedDream] = useState("");
+
   const webcamRef = useRef<WebcamRef | null>(null);
 
   const webhookUrl =
@@ -104,7 +106,27 @@ const AvatarPhoto: React.FC<AvatarPhotoProps> = ({ onProcess }) => {
             <WebcamScene ref={webcamRef} />
           )}
         </div>
+
         <div className="buttons-container">
+          {/* SELECT "Selecciona tu sueño" */}
+          <div className="select-container">
+            <select
+              value={selectedDream}
+              onChange={(e) => setSelectedDream(e.target.value)}
+            >
+              <option value="">Selecciona tu sueño</option>
+              <option value="greencity">Mi Sueño Greencity</option>
+              <option value="playa">Mi Sueño de Playa</option>
+              <option value="new_west">Mi Sueño New West</option>
+              <option value="noura">Mi Sueño Noura</option>
+              <option value="imaterra_sala">Mi Sueño Imaterra (sala)</option>
+              <option value="imaterra_comedor">
+                Mi Sueño Imaterra (comedor)
+              </option>
+            </select>
+            <span className="select-arrow">▼</span>
+          </div>
+
           <button
             type="button"
             className="button button-camera"
