@@ -1,48 +1,47 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Waiting.scss";
-
-// import fondo from "../../assets/img/fondo.png";
 import logo from "../../assets/img/logoScotia.png";
-//import waitingVideo from "../../assets/videos/video.mp4";
 
 interface WaitingProps {
   email: string;
   nombre: string;
-  imagenGenerada: boolean; // Nuevo prop para indicar si la imagen ya se generó
+  imagenGenerada: boolean; // Indica si la imagen ya se generó
   onEmailChange: (email: string) => void;
   onNombreChange: (nombre: string) => void;
   onShowPolicy: () => void;
-  onContinue: () => void; // Función para continuar a AvatarResult
+  onContinue: () => void; // Para continuar a AvatarResult
 }
 
 const Waiting: React.FC<WaitingProps> = ({
   email,
   nombre,
   imagenGenerada,
-  onNombreChange,
   onEmailChange,
+  onNombreChange,
   onShowPolicy,
   onContinue,
 }) => {
-  // const styleVideo = {
-  //   width: "60%",
-  // };
+  // Si deseas manejar la cédula en el estado del padre, añade props similares a email/nombre
+  // De momento, la manejamos localmente aquí como ejemplo:
+  const [cedula, setCedula] = useState("");
 
   return (
-    <div className="container">
-      {/* <img src={fondo} alt="Avatar" className="fondo" /> */}
-
-      <div className="header">
-        <img src={logo} alt="Logo Scotia" className="logo" />
+    <div className="waiting-container">
+      {/* Barra roja superior con "Scotia" o el logo */}
+      <div className="header-bar">
+        {/* Si quieres texto en vez de imagen, reemplaza <img> por <h1>Scotia</h1> */}
+        <img src={logo} alt="Logo Scotia" className="logo-scotia" />
       </div>
 
-      <div className="card">
-        {/* Se muestra un contenido distinto según si la imagen ya se generó o no */}
-        <h2 className="subtitle">AVATAR AI</h2>
+      {/* Tarjeta de contenido */}
+      <div className="waiting-card">
+        {/* Subtítulo principal */}
+        <h2 className="subtitle">Avatar IA</h2>
 
+        {/* Sección de mensaje de espera o imagen generada */}
         {imagenGenerada ? (
           <div className="avatar-container-ready">
-            <h2 className="subtitlewait">¡Tu imagen IA está lista!</h2>
+            <h2 className="subtitle-wait">¡Tu imagen IA está lista!</h2>
             <p className="ready-text">
               Disfruta de un avatar único que fusiona arte y tecnología. <br />
               ¡Haz clic para verlo!
@@ -52,37 +51,49 @@ const Waiting: React.FC<WaitingProps> = ({
           <div className="avatar-container-wait">
             <p className="waiting-text">
               Espera...
-              <br />
-              ¡A segundos de
+              <br /> ¡A segundos de
               <br /> cumplir tus
               <br /> sueños!
             </p>
           </div>
         )}
 
-        {/* Formulario con inputs de nombre y correo */}
-        <form>
-          <label className="label">NOMBRE</label>
+        {/* Formulario con placeholders en lugar de labels */}
+        <form className="waiting-form">
           <input
             type="text"
+            placeholder="Nombre"
             value={nombre}
             onChange={(e) => onNombreChange(e.target.value)}
             className="input"
             required
           />
-          <label className="label">CORREO</label>
+
           <input
             type="email"
+            placeholder="Email"
             value={email}
             onChange={(e) => onEmailChange(e.target.value)}
             className="input"
             required
           />
+
+          {/* Campo de cédula (ejemplo local) */}
+          <input
+            type="text"
+            placeholder="Cédula"
+            value={cedula}
+            onChange={(e) => setCedula(e.target.value)}
+            className="input"
+          />
+
+          {/* Checkbox de consentimiento */}
           <div className="checkbox-container">
             <input type="checkbox" className="checkbox" id="tratamiento" />
             <label htmlFor="tratamiento">
               <span>
-                Autorizo el trato de mis datos personales conforme a la{" "}
+                Consentimiento
+                <br />
                 <a
                   href="#"
                   onClick={(e) => {
@@ -90,19 +101,18 @@ const Waiting: React.FC<WaitingProps> = ({
                     onShowPolicy();
                   }}
                 >
-                  política de tratamiento de datos.
+                  Ver política de tratamiento de datos
                 </a>
               </span>
             </label>
           </div>
         </form>
 
-        {/* Botón para continuar a AvatarResult cuando la imagen esté lista */}
-        {imagenGenerada && (
-          <button className="button" onClick={onContinue}>
-            Ver avatar
-          </button>
-        )}
+        {/* Botón para ver el avatar si la imagen ya se generó */}
+
+        <button className="button" onClick={onContinue}>
+          Ver avatar
+        </button>
       </div>
     </div>
   );

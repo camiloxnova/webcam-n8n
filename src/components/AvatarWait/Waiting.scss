@@ -1,134 +1,152 @@
-.container {
+/* Contenedor general */
+.waiting-container {
   width: 100vw;
   height: 100vh;
+  background-color: #fff; /* Fondo blanco */
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background-color: black;
-  color: white;
-  overflow: hidden; /* Evita scroll innecesario */
-  position: relative;
-  justify-content: flex-start;
-}
-
-.title {
-  font-size: 24px;
-  font-weight: bold;
-}
-
-.highlight {
-  color: red;
-}
-
-.waiting-text {
-  margin-top: 43px;
-  color: #ec111a;
-  font-size: 35px;
-  font-weight: 800;
-}
-
-.progress-bar {
-  width: 75%;
-  background-color: gray;
-  border-radius: 5px;
-  height: 10px;
-  margin-top: 10px;
+  margin: 0;
+  padding: 0;
   overflow: hidden;
 }
 
-.progress {
-  background-color: red;
-  height: 100%;
-  transition: width 0.5s ease-in-out;
-}
-
-.image-container {
+/* Barra roja superior */
+.header-bar {
+  width: 100%;
+  background-color: #ec111a;
   display: flex;
-  align-items: center;
   justify-content: center;
-  margin-top: 20px;
-  position: relative;
-}
-
-.image {
-  width: 150px;
-  height: auto;
-  border-radius: 10px;
-}
-
-.loading-icon {
-  position: absolute;
-  font-size: 30px;
-  color: red;
-  animation: rotate 1s linear infinite;
-}
-
-@keyframes rotate {
-  from {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.container {
-  display: flex;
   align-items: center;
-  justify-content: center;
-  height: 100vh;
-  background-color: white;
-  color: white;
-  padding: 0px;
-  justify-content: flex-start;
-  padding-top: 0px;
-  overflow-x: hidden;
-  overflow-y: hidden;
+  padding: 15px 0;
 }
 
-.fondo {
-  width: 100vw; /* Se ajusta a la pantalla completa */
-  height: 100vh;
-  object-fit: cover; /* Asegura que cubra toda la pantalla */
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 0;
+/* Logo Scotia (ajusta el tamaño a tu gusto) */
+.logo-scotia {
+  height: 50px;
+  width: auto;
 }
 
-.card {
-  position: relative;
-  z-index: 1;
-  max-width: 90vw;
-  width: 400px;
+/* Tarjeta central */
+.waiting-card {
+  max-width: 400px;
+  width: 90%;
+  margin: 20px auto; /* Centra horizontalmente */
   text-align: center;
 }
 
-.clarologo {
-  width: 130px;
-}
-
-.title {
-  font-size: 34px;
+/* Subtítulo "Avatar IA" */
+.subtitle {
+  font-size: 24px;
+  color: #ec111a;
   font-weight: bold;
+  margin: 15px 0;
 }
 
-.subtitlewait {
-  color: red;
+/* Texto de espera */
+.waiting-text {
+  color: #ec111a;
+  font-size: 35px;
+  font-weight: 700;
+  line-height: 1.3;
+  margin-bottom: 30px;
+}
+
+/* Cuando la imagen está lista */
+.subtitle-wait {
+  color: #ec111a;
   font-size: 20px;
   font-weight: 600;
-  margin-bottom: 15px;
-  margin-top: 2px;
+  margin-bottom: 10px;
+  margin-top: 10px;
 }
 
-// .avatar-container-wait {
-//   // display: flex;
-//   // justify-content: center;
-//   // margin-bottom: 15px;
-//   // background: black;
-//   // flex-direction: column;
-//   // margin: 20px auto;
-//   // align-items: center;
-// }
+.ready-text {
+  color: #555;
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+/* Formulario */
+.waiting-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Inputs con borde rojo y texto rojo */
+.input {
+  width: 100%;
+  max-width: 300px;
+  margin: 10px 0;
+  padding: 12px;
+  border: 2px solid #ec111a;
+  border-radius: 8px;
+  background-color: #fff;
+  color: #ec111a;
+  font-size: 16px;
+  outline: none;
+
+  /* Placeholder en rojo más claro (opcional) */
+  &::placeholder {
+    color: #ec111a;
+    opacity: 0.7;
+  }
+}
+
+/* Checkbox y su contenedor */
+.checkbox-container {
+  width: 100%;
+  max-width: 300px;
+  margin-top: 15px;
+  text-align: left;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+
+  label {
+    font-size: 14px;
+    color: #ec111a;
+    line-height: 1.2;
+
+    a {
+      color: #ec111a;
+      text-decoration: underline;
+      font-size: 12px;
+    }
+  }
+}
+
+/* Checkbox custom */
+.checkbox {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  margin-top: 2px;
+  border: 2px solid #ec111a;
+  border-radius: 4px;
+  cursor: pointer;
+  outline: none;
+  background-color: #fff;
+
+  &:checked {
+    background-color: #ec111a;
+  }
+}
+
+/* Botón para "Ver avatar" */
+.button {
+  width: 200px;
+  height: 50px;
+  margin: 20px auto 0 auto;
+  background-color: #ec111a;
+  color: #fff;
+  font-size: 25px;
+  font-weight: bold;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.button:hover {
+  box-shadow: 0 4px 10px rgba(236, 17, 26, 0.4);
+}
