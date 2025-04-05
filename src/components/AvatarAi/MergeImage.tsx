@@ -75,7 +75,7 @@ const MergeImage: React.FC<MergeImageProps> = ({
 
         const scaleFactorIzq = 0.2; // Factor de escala (0.5 = 50% más pequeño)
         const scaleFactorDer = 0.4;
-        const scaleFactorAbajoDer = 0.33;
+        const scaleFactorAbajoDer = 0.6;
         ctx.drawImage(
           TextIzquierdaSUP,
           20,
@@ -95,8 +95,8 @@ const MergeImage: React.FC<MergeImageProps> = ({
         // Dibuja LogosPequenios.png en la esquina inferior derecha
         ctx.drawImage(
           logoInferior,
-          canvas.width - logoInferior.width + 1260, // mueve hacia la izquierda
-          canvas.height - logoInferior.height + 430, // mueve hacia arriba
+          canvas.width - logoInferior.width + 390, // mueve hacia la izquierda
+          canvas.height - logoInferior.height + 720, // mueve hacia arriba
           logoInferior.width * scaleFactorAbajoDer,
           logoInferior.height * scaleFactorAbajoDer
         );
