@@ -1,4 +1,4 @@
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { useState, useEffect } from "react";
 import AvatarPhoto from "./components/AvatarAi/AvatarPhoto";
 import AvatarResult from "./components/AvatarAi/AvatarResult";
@@ -141,14 +141,9 @@ function MainApp() {
 
 // Componente principal que define las rutas
 function App() {
-  const navigate = useNavigate();
   return (
     <Routes>
       <Route path="/" element={<MainApp />} />
-      <Route
-        path="/aviso_privacidadd"
-        element={<Policy onBack={() => navigate("/")} />}
-      />
     </Routes>
   );
 }

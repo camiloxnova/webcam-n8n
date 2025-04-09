@@ -3,10 +3,9 @@ import { useLocation } from "react-router-dom";
 
 const Policy = ({ onBack }: { onBack: () => void }) => {
   const location = useLocation();
-  // Si la ruta es /aviso_privacidad, no mostramos el botón de "Volver"
   const showBackButton = location.pathname !== "/aviso_privacidad";
 
-  // Estado para conocer el ancho actual de la ventana
+  // Detecta el ancho de la ventana para ajustes responsivos
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
   useEffect(() => {
@@ -15,39 +14,45 @@ const Policy = ({ onBack }: { onBack: () => void }) => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // Consideramos "pantalla pequeña" si el ancho es menor a 400px (puedes ajustar este valor)
   const isSmallScreen = windowWidth < 400;
 
-  const containerStyle: React.CSSProperties = {
+  // Estilos del overlay modal
+  const overlayStyle: React.CSSProperties = {
+    position: "fixed",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: "rgba(0,0,0,0.5)",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    minHeight: "100vh", // Permite crecer si hay mucho contenido
-    backgroundColor: "#f5f5f5",
-    padding: "20px", // Padding para evitar que el contenido toque los bordes
-    boxSizing: "border-box",
+    zIndex: 1000,
   };
 
+  // Estilos para la tarjeta de la política
   const cardStyle: React.CSSProperties = {
+    position: "relative",
     background: "white",
-    padding: isSmallScreen ? "20px" : "40px", // Reduce el padding en pantallas pequeñas
+    padding: isSmallScreen ? "20px" : "40px",
     borderRadius: "8px",
     textAlign: "justify",
     boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)",
+    maxHeight: "80vh",
     maxWidth: "600px",
     width: "90%",
+    overflowY: "auto",
   };
 
   const titleStyle: React.CSSProperties = {
     marginBottom: "20px",
-    fontSize: isSmallScreen ? "20px" : "24px", // Ajusta el tamaño de fuente según el ancho
+    fontSize: isSmallScreen ? "20px" : "24px",
   };
 
   const textStyle: React.CSSProperties = {
     marginBottom: "30px",
-    fontSize: isSmallScreen ? "14px" : "16px", // Ajusta el tamaño del texto
+    fontSize: isSmallScreen ? "14px" : "16px",
     lineHeight: "1.5",
-    textAlign: "justify",
   };
 
   const buttonStyle: React.CSSProperties = {
@@ -60,9 +65,29 @@ const Policy = ({ onBack }: { onBack: () => void }) => {
     cursor: "pointer",
   };
 
+  // Estilos para la tachita de cerrar (botón X)
+  const closeButtonStyle: React.CSSProperties = {
+    position: "absolute",
+    top: "10px",
+    right: "10px",
+    background: "transparent",
+    border: "none",
+    fontSize: isSmallScreen ? "20px" : "24px",
+    cursor: "pointer",
+  };
+
+  // Evitar que el clic en el contenido propague el evento al overlay
+  const handleCardClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    e.stopPropagation();
+  };
+
   return (
-    <div style={containerStyle}>
-      <div style={cardStyle}>
+    <div style={overlayStyle} onClick={onBack}>
+      <div style={cardStyle} onClick={handleCardClick}>
+        {/* Botón para cerrar la ventana (tachita) */}
+        <button style={closeButtonStyle} onClick={onBack} aria-label="Cerrar">
+          &times;
+        </button>
         <h2 style={titleStyle}>CONSENTIMIENTO PREVIO</h2>
         <p style={textStyle}>
           En relación con la Ley 81 del 26 de marzo del 2019 de Protección de
@@ -224,7 +249,11 @@ const Policy = ({ onBack }: { onBack: () => void }) => {
           Igualmente, entiendo que <strong>THE BANK OF NOVA SCOTIA</strong>{" "}
           tiene una Política de Privacidad de los datos personales a la que
           puedo acceder en el sitio web:{" "}
-          <a href="https://www.scotiabank.com.pa" target="_blank">
+          <a
+            href="https://www.scotiabank.com.pa"
+            target="_blank"
+            rel="noreferrer"
+          >
             www.scotiabank.com.pa
           </a>
           , donde puedo obtener información completa sobre el tipo de datos que
