@@ -35,7 +35,7 @@ const AvatarResult: React.FC<AvatarResultProps> = ({
       try {
         const storageRef = ref(
           storage,
-          `avatars_scotia/${email}-${Date.now()}.png`
+          `avatars_test/${email}-${Date.now()}.png`
         );
         await uploadString(storageRef, dataUrl, "data_url");
         const downloadURL = await getDownloadURL(storageRef);
@@ -50,7 +50,7 @@ const AvatarResult: React.FC<AvatarResultProps> = ({
           correoEnviado: false,
         };
         console.log("🚀 ~ datosFirestore:", datosFirestore);
-        await addDoc(collection(db, "imagenesScotiaDev"), datosFirestore);
+        await addDoc(collection(db, "imagenesTest"), datosFirestore);
         setUploadedImageUrl(downloadURL);
       } catch (error) {
         console.error("Error al subir imagen:", error);
@@ -73,7 +73,9 @@ const AvatarResult: React.FC<AvatarResultProps> = ({
 
       <div className="result-wrapper">
         <div className="card">
-          <h2 className="subtitle">AVATAR AI</h2>
+          <h2 className="subtitle">
+            Comparte en redes sociales etiqueta @colsubsidio
+          </h2>
           <div className="avatar-container">
             <img
               src={uploadedImageUrl}
@@ -81,6 +83,7 @@ const AvatarResult: React.FC<AvatarResultProps> = ({
               alt="Avatar generado"
             />
           </div>
+          <h2 className="subtitle">¡Descarga la imagen en tu correo!</h2>
           <button
             type="button"
             className="button"
