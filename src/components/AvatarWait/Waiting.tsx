@@ -75,7 +75,7 @@ const Waiting: React.FC<WaitingProps> = ({
             Espera...
             <br /> ¡A segundos de
             <br /> cumplir tus
-            <br /> sueños!
+            <br /> metas!
           </p>
         </div>
 
@@ -99,14 +99,22 @@ const Waiting: React.FC<WaitingProps> = ({
             required
           />
 
-          <input
+          {/* <input
             type="text"
             placeholder="Cédula"
             value={cedula}
             onChange={(e) => onCedulaChange(e.target.value)}
             className="input"
             required
-          />
+          /> */}
+
+          <button
+            type="button"
+            className="button"
+            style={{ width: "284px", margin: "20px 0 0 0" }}
+          >
+            Test vocacional
+          </button>
 
           <div className="checkbox-container">
             <input

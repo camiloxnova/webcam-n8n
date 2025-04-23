@@ -123,15 +123,13 @@ const AvatarPhoto: React.FC<AvatarPhotoProps> = ({
                 onDreamChange(dream); // Llama al callback para elevar la selección
               }}
             >
-              <option value="">Selecciona tu sueño</option>
-              <option value="greencity">Mi Sueño Greencity</option>
-              <option value="playa">Mi Sueño de Playa</option>
-              <option value="new_west">Mi Sueño New West</option>
-              <option value="noura">Mi Sueño Noura</option>
-              <option value="imaterra_sala">Mi Sueño Imaterra (sala)</option>
-              <option value="imaterra_comedor">
-                Mi Sueño Imaterra (comedor)
-              </option>
+              <option value="">Selecciona tu profesión</option>
+              <option value="Gastronómico">Gastronómico</option>
+              <option value="Administrativo">Administrativo</option>
+              <option value="experto en TIC">experto en TIC</option>
+              <option value="experto en logística">experto en logística</option>
+              <option value="Regente de Farmacia">Regente de Farmacia</option>
+              <option value="experto en SST">experto en SST</option>
             </select>
             <span className="select-arrow">▼</span>
           </div>
