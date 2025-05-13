@@ -31,10 +31,10 @@ const AvatarResult: React.FC<AvatarResultProps> = ({
     hasMergedRef.current = true;
 
     try {
-      const storageRef = ref(storage, `avatars/${email}-${Date.now()}.png`);
+      const storageRef = ref(storage, `avatars_v2/${email}-${Date.now()}.png`);
       await uploadString(storageRef, dataUrl, "data_url");
       const downloadURL = await getDownloadURL(storageRef);
-      await addDoc(collection(db, "images"), {
+      await addDoc(collection(db, "imagesClaroV2"), {
         email: email,
         nombre: nombre,
         imageUrl: downloadURL,
