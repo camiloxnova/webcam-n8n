@@ -1,8 +1,8 @@
 import React, { useRef, useEffect } from "react";
 
 // Importa o define las rutas de tus imágenes de marco
-import claroMedia from "../../assets/img/ClaroMedia.png";
-import fraseClaro from "../../assets/img/FraseClaro.png";
+// import claroMedia from "../../assets/img/ClaroMedia.png";
+// import fraseClaro from "../../assets/img/FraseClaro.png";
 import logosPequenios from "../../assets/img/LogosPequenios.png";
 
 interface MergeImageProps {
@@ -32,11 +32,9 @@ const MergeImage: React.FC<MergeImageProps> = ({ imageUrl, onMerged }) => {
     // Cargamos la imagen avatar y las imágenes de marco
     Promise.all([
       loadImage(imageUrl),
-      loadImage(claroMedia),
-      loadImage(fraseClaro),
       loadImage(logosPequenios),
     ])
-      .then(([avatar, claro, frase, logos]) => {
+      .then(([avatar, claro]) => {
         // Definir dimensiones del canvas en base al avatar (puedes ajustar según necesidad)
         canvas.width = avatar.width;
         canvas.height = avatar.height;
@@ -48,22 +46,22 @@ const MergeImage: React.FC<MergeImageProps> = ({ imageUrl, onMerged }) => {
         ctx.drawImage(claro, 20, 20, claro.width, claro.height);
 
         // Dibuja FraseClaro.png en la esquina superior derecha
-        ctx.drawImage(
-          frase,
-          canvas.width - frase.width - 20,
-          20,
-          frase.width,
-          frase.height
-        );
+        // ctx.drawImage(
+        //   frase,
+        //   canvas.width - frase.width - 20,
+        //   20,
+        //   frase.width,
+        //   frase.height
+        // );
 
         // Dibuja LogosPequenios.png en la esquina inferior derecha
-        ctx.drawImage(
-          logos,
-          canvas.width - logos.width - 20, // mueve hacia la izquierda
-          canvas.height - logos.height - 20, // mueve hacia arriba
-          logos.width,
-          logos.height
-        );
+        // ctx.drawImage(
+        //   logos,
+        //   canvas.width - logos.width - 20, // mueve hacia la izquierda
+        //   canvas.height - logos.height - 20, // mueve hacia arriba
+        //   logos.width,
+        //   logos.height
+        // );
 
         // Convierte el canvas a data URL (imagen en formato PNG)
         const mergedDataUrl = canvas.toDataURL("image/png");
